@@ -1,23 +1,23 @@
-<!--<%@ page pageEncoding="UTF-8"%>-->
-<!DOCTYPE html>
+<%@page import="java.time.LocalDate"%>
+<%@page import="uuu.ksc.entity.Customer"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
+<!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8" />
         <link rel="stylesheet" href="index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>sally's collection</title>
-        <script src="jquery.js"></script>
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>
+        <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
         <style>
-        
         #captchaImage{cursor:pointer;}
-        
         </style>
-		<script>
-		$(document).ready(init);
-		function init()
-		{
+        
+	<script>
+	$(document).ready(init);
+	function init()
+	{
       var today =new Date();
       var y =today.getYear()+1900-12;
       // 2023-12(要年滿12歲)
@@ -27,11 +27,24 @@
       d = d<10?("0"+d):d;
       var maxDate= y+"-"+m+"-"+d;
       // alert(maxDate);
-      birth.setAttribute=("max",maxDate);
-			$("#myShow").mousedown(showpassHandler)
-						.mouseup(hidepassHandler)
-						.mouseleave(hidepassHandler);
-		}
+/*       birthday.setAttribute=("max",maxDate); */
+  	  birthday.setAttribute=("max",'<%= LocalDate.now().minusYears(Customer.MIN_AGE) %>'); 
+<%--   
+	  $("input[name ='id']").attr('pattern',<%=Customer.ID_PATTERN%>);
+	  $("input[name ='id']").attr('maxlength',<%=Customer.MAX_ID_LENGTH %>);
+	  $("input[type ='password']").attr('minlength',<%=Customer.MIN_PWD_LENGTH %>);
+  	  $("input[type ='password']").attr('maxlength',<%=Customer.MAX_PWD_LENGTH %>); 
+   	  $("input[name ='name']").attr('minlength',<%=Customer.MIN_PWD_LENGTH %>);
+  	  $("input[name ='name']").attr('maxlength',<%=Customer.MAX_PWD_LENGTH %>);   --%>
+	  $("#myShow").mousedown(showpassHandler)
+				  .mouseup(hidepassHandler)
+				  .mouseleave(hidepassHandler);
+			
+      //如果有post這個才會有repopulateFormData() 
+      //超連結一開始會用get請求所以不會有
+
+      repopulateFormData() 
+	}
 		function showpassHandler(){
       $("#myShow").addClass("fas fa-eye");
 			$("#myPass").attr("type","text");
@@ -45,39 +58,31 @@
 			//alert('refresh Captcha');
 			captchaImage.src='images/captcha.jpg?refresh=' + new Date(); //ajax
 		}
+		function repopulateFormData(){
+		   <% if("POST".equals(request.getMethod()) ){%>
+		   <% if (request.getParameter("submit") != null){%>
+			$("#register input[name='id']").val('<%= request.getParameter("id")%>');
+			$("#register input[name='email']").val('<%= request.getParameter("email")%>');
+			$("#register input[name='password']").val('<%= request.getParameter("password")%>');
+			$("#register input[name='name']").val('<%= request.getParameter("name")%>');
+			$("#register input[name='phone']").val('<%= request.getParameter("phone")%>');
+			$("#register #birthday").val('<%= request.getParameter("birthday")%>');
+			var genderData= '<%= request.getParameter("gender")%>';
+			$("#register input[value='"+genderData+"']").prop('checked',true);
+			<%}else{%>
+			$("#login input[name='id']").val('<%= request.getParameter("id")%>');
+			$("#login input[name='email']").val('<%= request.getParameter("email")%>');
+		   <%}%>	
+		   <%}%>
+		}
 		</script>  
 	</head>
 <body>
-    <div class="header">
-        <div class="logo"><a href="./"><img src="images/logo.png"></a></div>
-        <div class="menu">
-          <ul>
-          <li><a href="./">首頁</a></li>
-          <li><a href="products_list.jsp">全部商品</a></li>
-          <li><a href="woman.html">女性專區</a></li>
-          <li><a href=#>男性專區</a></li>
-          <li class="lastLi"><a href=#>孩童專區</a></li>
-          </ul>
-      </div>
-        <nav>
-          <div class="navitem">
-            <div class="navitem__icon"></div>
-            <i class="fa fa-pencil-square" style="font-size:30px; color: wheat;"></i>
-            <a class=navitem__text href="Untitled-8.html">關於我們</a>
-          </div>
-            <div class="navitem">
-              <div class="navitem__icon"></div>
-              <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
-              <a class=navitem__text href="Untitled-8.html">我的訂單</a>
-            </div>
-            <div class="navitem">
-              <div class="navitem__icon"></div>
-              <i class="fa fa-user-circle-o" style="font-size:30px; color: wheat;"></i>
-              <a class=navitem__text href="login.jsp#tab1">登入/註冊</a>
-            </div>
-        </nav>
-    </div>
-        <!-- header the end -->
+
+   <jsp:include page="/subviews/header.jsp" />  
+   <jsp:include page="/subviews/nav.jsp" />
+       
+       
     <div class="loginandout">
         <ul id="tabs" class="tabs">
             <li><a href="#tab1" class="tab">會員登入</a></li>
@@ -92,7 +97,7 @@
                 <div class="center">
                     <h1>登入</h1>
                     
-                    <form method="post" action="login.do">
+                    <form method="post" action="login.do#tab1" id ="login">
                       <div class="txt_field">
                         <input type="text" value="" required name="id">
                         <span></span>
@@ -103,8 +108,6 @@
                         <span></span>
                         <label>密碼 </label>
                       </div>
-           <!--             <input type="checkbox" name="auto" value='ON' />記住我的帳號 -->
-                        <!-- <input type="button" value="顯示密碼" id="myShow"><br> -->
                         <i class="fas fa-eye-slash" id="myShow"></i>
                         <div class="captchaImage">
                         <label>&nbsp;驗證碼 : </label>
@@ -128,13 +131,13 @@
         %>
        		 <%= register_errors==null?"":register_errors %>
                     <h1>註冊</h1>
-                    <form method="post" action="register.do">
+                    <form method="post" action="register.do" id="register">
                         <div class="loginpostition_parent">
                             <div class="loginpostition_child">
                             <div class="txt_field">
                                 <input type="text" name="id" id="id" class="" pattern="[A-Z][12][0-9]{8}" required>
                                 <span></span>
-                                <label for="address">身分證</label>
+                                <label>身分證</label>
                               </div>
                             <div class="txt_field">
                                 <input type="text"required title="請填寫此欄位並符合email格式" type="email" name="email">
@@ -164,15 +167,15 @@
                                     <input type="file" name="photo" id="photo">
                                 </div>
                                 <div class="loginpostition_txt">
-                                    <label for="birth" class="">生日:&nbsp;&nbsp;</label>
+                                    <label for="birthday" class="">生日:&nbsp;&nbsp;</label>
                                     <input type="date" name="birthday" id="birthday" class="" max="2023-02-02">
                                 </div>
                                 <div class="loginpostition_txt">
                                     <label for="gender" class="">性別:&nbsp;&nbsp;</label>
-                                    <input type="radio" name="gender" id="gender" value="M" checked><lable>男</lable>
-                                    <input type="radio" name="gender" id="gender" value="F"><lable>女</lable>
+                                    <input type="radio" name="gender"  value="M" value='<%= Customer.MALE %>'><label>男</label>
+                                    <input type="radio" name="gender"  value="F" value='<%= Customer.FEMALE %>'><label>女</label>
                                 </div>
-                                <input type="submit" value="註冊" class="registerbtn" onclick="registerbtn()">
+                                <input type="submit" value="註冊" name='submit'  class="registerbtn">
                             </div>
                           </div>
                     </form>

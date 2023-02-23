@@ -29,4 +29,11 @@ public class CustomerService {
 		}
 		dao.insert(c);
 	}
+	public void update(Customer c) throws VGBException{
+		//throws VGBException-->如果有錯，就拋出
+		if(c==null) {
+			throw new IllegalArgumentException("註冊會員時客戶(Customer)物件不得為null");
+		}
+		dao.update(c);
+	}
 }

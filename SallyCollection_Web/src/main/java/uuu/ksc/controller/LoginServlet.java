@@ -18,6 +18,7 @@ import uuu.ksc.entity.Customer;
 import uuu.ksc.exception.LoginFailedException;
 import uuu.ksc.exception.VGBException;
 import uuu.ksc.service.CustomerService;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -41,6 +42,7 @@ public class LoginServlet extends HttpServlet {
     //doPost 伺服器規定的名稱，當初new設定的
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	List<String> errors = new ArrayList<>();
+    	HttpSession session =request.getSession();//有舊的session用舊的，沒有會新增一個
     	request.setCharacterEncoding("utf-8");//這邊欄位都沒有中文所以不用加
     	// 1.取得request 中form data(id,password,captcha)
     	String id = request.getParameter("id");
@@ -56,8 +58,13 @@ public class LoginServlet extends HttpServlet {
     	}
     	if(captcha ==null || (captcha=captcha.trim()).length()==0) {
     		errors.add("必須輸入帳號或email");
+    	}else {
+    		String oldCaptcha= (String)session.getAttribute("LoginCaptchaServlet");
+    				if(!captcha.equalsIgnoreCase(oldCaptcha)){
+    			errors.add("驗證碼不正確");
+    		}
     	}
-    	
+    	session.removeAttribute("LoginCaptchaServlet");//for 資安考量
     	//2.若檢查無誤，則建立CustomerService物件，並呼叫商業邏輯login
     	if(errors.isEmpty()) {
     	CustomerService service = new CustomerService();
@@ -66,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 			
 			//3.1 登入成功：內部轉交（forward）/login_ok.jsp
 			RequestDispatcher dispatcher =request.getRequestDispatcher("login_ok.jsp");
-			request.setAttribute("member",c);
+			session.setAttribute("member",c);
 			request.setAttribute("msg","登入");
 			dispatcher.forward(request,response);
 			

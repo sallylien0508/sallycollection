@@ -56,7 +56,6 @@ body{
     border-right: 1px solid white;
 }
 a:link{
-    color: white;
     text-decoration: none;
 }
 a:visited{
@@ -104,6 +103,7 @@ nav .navitem:nth-child(2) .navitem__icon{
     font-style: italic;
     font-size: 13px;
     margin: 8px;
+    color:white;
 }
 
 .loginandout{
@@ -308,7 +308,7 @@ form .txt_field{
 display: flex;
 align-items: center;
 margin: 84.5px auto;
-width: 100vmax;
+width: 100%;
 height: 60vh;
 }
 
@@ -350,6 +350,7 @@ list-style: none;
 .num{
     width: 50%;
     display: flex;
+    padding-left:2%;
 }
 .num li{
     width: 290px;
@@ -358,6 +359,7 @@ list-style: none;
     color: #623521;
     border: 1px solid #EAF0ED;
     padding-top: 2%;
+    margin-right: 2%;
 }
 .num a{
     color: rgba(55, 24, 0);
@@ -374,9 +376,9 @@ list-style: none;
 
 .productItem{
     display:inline-block;
-    width: 19%;
-    border:lightgray 1px soild; 
+    width: 20%;
     padding: 2%;
+    margin-right:11.5px;
     vertical-align:top;
 }
 .productItem h1{
@@ -432,15 +434,42 @@ list-style: none;
     padding-bottom:10px;
     text-align: center;
 }
-.productItem a
+.productItem input
 {
-  display: block;
   height: 50px;
   font: normal normal 600 24px/20px "PingFang TC";
-  letter-spacing: 0px;
   font-weight: bold;
   color: #3F5D45;
-  text-decoration:none;
   background: #EAF0ED;
-  padding-top:25px;
+  border: none;
+  width: 100%;
+}
+#searchForm{
+	text-align:right;
+	margin-right:3%;
+}
+#searchForm input,button{
+	border: none;
+	outline: none;
+	color: white;
+	padding: 15px;
+	background:rgb(115 60 17 / 49%);
+  	box-shadow: 0.3rem 0.25rem 0rem 0px #724c3f;
+  	border-radius: 0.5rem;
+}
+.sidebar{
+	    list-style: none;
+	    position: absolute;
+	    top: 84.5px;
+	    right: 0px;
+	    background-color: rgb(70, 45, 36);
+	    padding: 20px;
+	    margin: 0;
+	    display: none;
+}
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2%;
 }

@@ -20,7 +20,7 @@
 	<nav>
 		<hr>
 	</nav>
-	<% Customer member= (Customer)request.getAttribute("member"); 
+	<% Customer member= (Customer)session.getAttribute("member"); 
 	String msg =(String)request.getAttribute("msg");
 	%>
 	
