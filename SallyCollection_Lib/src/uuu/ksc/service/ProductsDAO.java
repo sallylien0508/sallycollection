@@ -189,7 +189,7 @@ class ProductsDAO{
 						if(colorName!=null) {
 							Color color =new Color();
 							color.setName(colorName);
-							color.setStock(rs.getInt("color_name"));
+							color.setStock(rs.getInt("color_stock"));
 							color.setPhotoUrl(rs.getString("color_photo"));
 							color.setIconUrl(rs.getString("icon_url"));
 							color.setOrdinal(rs.getInt("ordinal"));
