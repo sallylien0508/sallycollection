@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>sally's collection</title>
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>

@@ -105,9 +105,11 @@
                   <%= p.getUnitPrice() %></li>
                 </ul>
                 </a>
-                <p>
-                  <input type="submit" value="加入購物車"></input>
-                </p>
+                <%-- <a href="<%= request.getContextPath() %>/member/cart.jsp"> --%>
+	                <p>
+	                  <input type="submit" value="加入購物車"></input>
+	                </p>
+                <!-- </a> -->
               </div>
        <%} %>
         <%} %>
