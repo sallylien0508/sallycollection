@@ -1,3 +1,4 @@
+<%@page import="uuu.ksc.entity.Color"%>
 <%@page import="uuu.ksc.entity.Outlet"%>
 <%@page import="uuu.ksc.entity.Product"%>
 <%@page import="uuu.ksc.service.ProductService"%>
@@ -56,7 +57,7 @@
 	    <jsp:include page="/subviews/nav.jsp" />
 		</header>	
 		<%
-		String productId="5";
+		String productId=request.getParameter("productId");
 		ProductService service = new ProductService();
 		Product p =null;
 		if(productId!=null && productId.length()>0){
@@ -87,28 +88,30 @@
 					<div>庫存：<%= p.getStock()%><span id='stockSpan'>，紅色：2個</span></div>
 					<form method='POST'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
+					<%if(p.getcolorCount()>0){ %>
+					<!-- 顏色 -->
 					<div>
 						<label>顏色: </label>
+						<% for(int i=0;i<p.getColorsList().size();i++){ 
+							Color color = p.getColorsList().get(i);
+						%>
 						<label>
-						<input type='radio' name='color' required value='紅'>
-						<img class="productIcon" title='紅' src='images/red.jpg' data-photo='images/red.jpg' data-stock='2' onclick='changeColorData(this)'>
+						<input type='radio' name='color' required value='<%= color.getName() %>'>
+						<img class="productIcon" title='<%= color.getName() %>' src='<%= color.getIconUrl()==null?color.getPhotoUrl():color.getIconUrl() %>' data-photo='<%= color.getPhotoUrl() %>' data-stock='<%= color.getStock() %>' onclick='changeColorData(this)'>
 						</label>
-						
-						<label>
-						<input type='radio' name='color' required value='米白色'>
-							<img class="productIcon" title='米白色' src='images/Ivory.jpg' data-photo='images/Ivory.jpg' data-stock='2' onclick='changeColorData(this)'>
-						</label>
-						
-						<label>
-						<input type='radio' name='color' required value='黑色'>
-							<img class="productIcon" title='黑色' src='images/black.jpg' data-photo='images/red.jpg' data-stock='3' onclick='changeColorData(this)'>
-						</label>
-						
-						<label>	
-						<input type='radio' name='color' required value='灰色'>
-							<img class="productIcon" title='灰色' src='images/Grey.jpg' data-photo='images/Grey.jpg' data-stock='2' onclick='changeColorData(this)'>
-						</label>
+							<%} %>
 					</div>
+					<%} %>
+					<!-- size -->
+					<div>
+							<label>Size</label>
+							<select id='size' name='size'onchange="changeColorDataSelect(this)">
+								<option value=''>請選擇...</option>	
+								<option value='S' data-stock='10' data-price='10'>S</option>
+								<option value='M' data-stock='20' data-price='10'>M</option>	
+								<option value='L' data-stock='20' data-price='10'>L</option>							
+							</select>
+						</div> 
 					<div>
 						<label>數量: </label>
 						<input type='number' id='quantity' max='<%= p.getStock() %>' min='0' required>

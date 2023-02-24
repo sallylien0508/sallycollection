@@ -35,7 +35,7 @@ public class Product extends Object{
 		}
 	}
 	
-	public int colorCount() {
+	public int getcolorCount() {
 		return colorsMap.size();
 	}
 	
