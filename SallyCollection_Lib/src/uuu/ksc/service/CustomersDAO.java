@@ -94,7 +94,7 @@ class CustomersDAO {
 		}
 	}
 	
-	private static final String UPDATE_CUSTOMER="UPDATE customers"
+	private static final String UPDATE_CUSTOMER="UPDATE customers "
 			+ "set email=?, password=?, name=?, birthday=?, gender=?"
 			+ "	,address=?, phone=?, blood_type=?, subscribed =?"
 			+ "    WHERE id=?";

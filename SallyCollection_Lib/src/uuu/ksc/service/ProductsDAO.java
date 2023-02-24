@@ -3,6 +3,7 @@ package uuu.ksc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import uuu.ksc.entity.Color;
 import uuu.ksc.entity.Outlet;
 import uuu.ksc.entity.Product;
 import uuu.ksc.exception.VGBException;
@@ -148,10 +149,10 @@ class ProductsDAO{
 		}
 		
 		private static final String select_Product_By_Id=
-				"SELECT id, name, unit_price, stock, description, photo_url, "
-				+ "	launch_date, category, discount"
-				+ "   FROM products"
-				+ " WHERE id=?";
+				"SELECT id, name, unit_price, products.stock , description,products.photo_url, launch_date, category, discount, \n"
+				+ "	product_id, color_name, product_colors.stock AS color_stock,product_colors.photo_url,  product_colors.photo_url AS color_photo,icon_url,ordinal\n"
+				+ "FROM products\n"
+				+ "	LEFT JOIN product_colors ON id =product_id  WHERE id = ? ORDER BY id,ordinal;";
 		public Product selectProductById(String id) throws VGBException{
 			Product p = null;		 
 			try (
@@ -179,12 +180,25 @@ class ProductsDAO{
 						p.setDescription(rs.getString("description"));
 						p.setPhotoUrl(rs.getString("photo_url"));
 						p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
-						p.setCategory(rs.getString("category"));					
+						p.setCategory(rs.getString("category"));
+						
+						//System.out.println(p);
+						//System.out.printf("顏色 %s,%s,%s,%s\n",rs.getString("product_id"),rs.getString("product_name"),rs.getString("product_stock"),rs.getString("product_photo"));
 						//list.add(p); //不要了
+						String colorName = rs.getString("color_name");
+						if(colorName!=null) {
+							Color color =new Color();
+							color.setName(colorName);
+							color.setStock(rs.getInt("color_name"));
+							color.setPhotoUrl(rs.getString("color_photo"));
+							color.setIconUrl(rs.getString("icon_url"));
+							color.setOrdinal(rs.getInt("ordinal"));
+							//p.addColor(color);
+						}
 					}
 				}			
 			} catch (SQLException e) {
-				throw new VGBException("[用id查詢產品]失敗");
+				throw new VGBException("[用id查詢產品]失敗",e);
 			}
 			return p;
 		}

@@ -172,8 +172,8 @@
                                 </div>
                                 <div class="loginpostition_txt">
                                     <label for="gender" class="">性別:&nbsp;&nbsp;</label>
-                                    <input type="radio" name="gender"  value="M" value='<%= Customer.MALE %>'><label>男</label>
-                                    <input type="radio" name="gender"  value="F" value='<%= Customer.FEMALE %>'><label>女</label>
+                                    <input type="radio" name="gender"   value='<%= Customer.MALE %>'><label>男</label>
+                                    <input type="radio" name="gender"  value='<%= Customer.FEMALE %>'><label>女</label>
                                 </div>
                                 <input type="submit" value="註冊" name='submit'  class="registerbtn">
                             </div>
