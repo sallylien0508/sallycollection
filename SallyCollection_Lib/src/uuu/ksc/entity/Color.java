@@ -1,11 +1,11 @@
 package uuu.ksc.entity;
 
-public class Color {
+public class Color implements Comparable<Color>{
 	private String name; //PKey
 	private int stock;   //required
 	private String photoUrl;
 	private String iconUrl;
-	private int ordinal; 
+	private int ordinal; //以此為序
 	
 	public String getName() {
 		return name;
@@ -65,6 +65,11 @@ public class Color {
 					+ ", \n圖片網址=" + photoUrl 
 					+ ", \n小圖網址=" + iconUrl
 				+ ", \n順序=" + ordinal + "]";
+	}
+	@Override
+	public int compareTo(Color otherColor) {
+		
+		return this.ordinal-otherColor.ordinal;
 	}
 	
 	

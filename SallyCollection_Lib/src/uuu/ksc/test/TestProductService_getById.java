@@ -12,7 +12,7 @@ public class TestProductService_getById {
 	public static void main(String[] args) {
 		ProductService service = new ProductService();		
 		try {			
-			Product p = service.getProductById("4");
+			Product p = service.getProductById("5");
 			System.out.println(p);
 		} catch (VGBException e) {
 			Logger.getLogger("測試[用id查詢產品]").log(

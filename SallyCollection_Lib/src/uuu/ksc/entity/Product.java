@@ -1,6 +1,11 @@
 package uuu.ksc.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import uuu.ksc.exception.VGBInvalidDataException;
 
@@ -13,6 +18,37 @@ public class Product extends Object{
 	private String photoUrl;
 	private LocalDate launchDate;
 	private String category; //必要
+	private Map<String, Color> colorsMap=new HashMap<>();
+	
+	//集合型態的attribute，getter不可直接回傳正本
+//	public Map<String, Color> getColorsMap() {
+//		//TODO:回傳副本
+//		return new HashMap(colorsMap);
+//	}
+	public List<Color> getColorsList(){
+	if(colorsMap.size()>0) {
+		List<Color> list = new ArrayList<>(colorsMap.values());//產生副本
+		Collections.sort(list);
+		return list;
+	}else {
+		return null;
+		}
+	}
+	
+	public int colorCount() {
+		return colorsMap.size();
+	}
+	
+	public Color findColor(String colorName){
+		if(colorName==null) throw new IllegalArgumentException("查詢顏色物件，名稱不得為null");
+			Color color = colorsMap.get(colorName);
+			return color;
+	}
+	//集合型態的attribute，setter必須改為addColor,updateColor,removeColor
+	public void addColor(Color color) {
+		if(color == null) throw new IllegalArgumentException("加入顏色集合的color物件不得為null");
+		colorsMap.put(color.getName(),color);
+	}
 	
 	public Product() {}
 	
@@ -121,7 +157,9 @@ public class Product extends Object{
 				+ ",\n 說明=" + description 
 				+ ",\n 圖片網址=" + photoUrl 
 				+ ",\n 上架日期=" + launchDate
-				+ ", 分類=" + category + "]";
+				+ ", 分類=" + category 
+				+",\n colorsMap=" + this.getColorsList()
+				+ "]";
 	}
 
 	@Override

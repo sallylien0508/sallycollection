@@ -167,6 +167,7 @@ class ProductsDAO{
 					//5. 處理rs
 					while(rs.next()) {
 						//Product p;
+					if(p==null) {	
 						int discount = rs.getInt("discount");
 						if(discount>0) {
 							p = new Outlet();
@@ -181,7 +182,7 @@ class ProductsDAO{
 						p.setPhotoUrl(rs.getString("photo_url"));
 						p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
 						p.setCategory(rs.getString("category"));
-						
+					}
 						//System.out.println(p);
 						//System.out.printf("顏色 %s,%s,%s,%s\n",rs.getString("product_id"),rs.getString("product_name"),rs.getString("product_stock"),rs.getString("product_photo"));
 						//list.add(p); //不要了
@@ -193,7 +194,7 @@ class ProductsDAO{
 							color.setPhotoUrl(rs.getString("color_photo"));
 							color.setIconUrl(rs.getString("icon_url"));
 							color.setOrdinal(rs.getInt("ordinal"));
-							//p.addColor(color);
+							p.addColor(color);
 						}
 					}
 				}			
