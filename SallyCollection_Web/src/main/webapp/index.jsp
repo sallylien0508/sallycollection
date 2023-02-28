@@ -44,6 +44,26 @@
           歡迎Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium accusantium culpa, maiores commodi iste dolorum. Numquam, alias excepturi. Hic, dolores aperiam enim sit architecto dolor animi? Tempore magni dolorum distinctio?
           </p>
        </div>
+        <img src="images/indexdetai.jpg"style="width: 100vw;height: 600px;">       
+       <img src="images/hackimg.jpg" style="margin: 0 auto;display: block;">
+       <div style="text-align:center">
+              <h1>SHOP WITH SALLY</h1>
+       <i class="fa-solid fa-truck-fast"style="font-size:60px"></i>
+      		 <p>Free express delivery</p>
+			 <span>Delivery is free for orders over $150.
+		Your products are sent within 1-2 working days.</span>
+		<br>
+       <i class="fa-solid fa-box-open" style="font-size:60px;margin-top:50px"></i>
+              <p>Easy Returns</p>
+			  <span>Shop with peace of mind. 14 day returns.</span>
+		<br>
+       <i class="fa-solid fa-circle-check"style="font-size:60px;margin-top:50px"></i>
+              <p>Quality Guarantee</p>
+			  <span>We inspect every products before sending your order.</span>
+       </div>
+
+        <img src="images/homedetail.jpg" style="margin: 0 auto;display: block;">
+
 <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

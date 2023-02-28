@@ -4,34 +4,34 @@
 <%@page import="uuu.ksc.entity.Customer"%>
 <html>
 <head>
+    <link rel="stylesheet" href="index.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
 	<title>會員註冊成功</title>
-	<link rel="stylesheet" href="css/vgb.css">
-	<meta http-equiv="refresh" content="5; url=./">	
+	<script src="https://kit.fontawesome.com/e3d7510046.js"></script>
+<!-- 	<meta http-equiv="refresh" content="5; url=./">	 -->
 </head>
+<style>
+	img{width:100vw;height:100vh}
+	h1{    
+		position: absolute;
+	    top: 0;
+	    left: 45%;
+	    }
+</style>
 <body>
+	<img alt="" src="images/fish.gif">
 	<header>
-			<h1>
-				<a href='./'>非常好書</a>
-				<sub>註冊成功</sub>
-			</h1>
+			<h1>註冊成功</h1>
+			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href='index.jsp'>首頁</a></span>
 	</header>
-	<nav>
-		<hr>
-	</nav>
 	<% Customer member= (Customer)session.getAttribute("member"); 
 	String msg =(String)request.getAttribute("msg");
 	%>
 	
 	<article>		
-		<h2><%= member==null?"尚未登入":member.getName() %><%= msg!=null?msg:"" %>成功</h2>
-		<p>5秒後將自動跳轉<a href='index.html'>首頁</a></p>
+		<%-- <h2><%= member==null?"尚未登入":member.getName() %><%= msg!=null?msg:"" %>成功</h2> --%>
 	</article>
-	<footer>
-		<hr>
-		<div class='copyRightDiv'>非常好書&copy;版權所有 2023-01~</div>
-	</footer>
 </body>
 </html>
 

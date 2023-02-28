@@ -13,6 +13,15 @@
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>
         <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
 		<style>
+		.addcart{
+			height: 50px;
+		    font: normal normal 600 24px/20px "PingFang TC";
+		    color:white;
+		    background-color: rgb(106, 77, 67);
+		    border: none;
+	    	width: 100%;
+	    	margin-top: 10%;
+		}
 		#album{
 			border:1px solid gray;
 			padding:10px;
@@ -51,7 +60,7 @@
 			#productImg{width:300px}
 			.productDescription{padding-top: 1ex}
 			.productIcon{width:32px;vertical-align: middle;margin: 1ex}
-			.productInfo{margin-left:10%;font-size: 20px;}
+			.productInfo{margin-left:10%;font-size: 20px;width: 100%;}
 			#slider{overflow-x: auto;}
 			/* HIDE RADIO */
 	        [type=radio] { 
@@ -85,11 +94,11 @@ $(document).ready(function(){
 		let buttonLeft = document.getElementById('slideLeft');
 
 		buttonLeft.addEventListener('click', function(){
-			document.getElementById('slider').scrollLeft -= 180
+			document.getElementById('slider').scrollLeft -= 100
 		})
 
 		buttonRight.addEventListener('click', function(){
-			document.getElementById('slider').scrollLeft += 180
+			document.getElementById('slider').scrollLeft += 100
 		})
 	
 });
@@ -161,22 +170,24 @@ $(document).ready(function(){
 			</div>
 				 </div>  
 				<div class='productInfo'>
-					<span style="font-size: 45px;"><%= p.getName() %></span>
+					<span style="font-size: 35px;"><%= p.getName() %></span>
+					<br>
 					<% if(p instanceof Outlet) {%>
-					<span>定價：<%= ((Outlet)p).getListPrice()%>元</span>
+					<span style="text-decoration:line-through;"><%= ((Outlet)p).getListPrice()%>元</span>
 					<%} %>
 					<br>
-					<span>優惠價：
+					<span style="color:red;">NT$：
 					<%= p instanceof Outlet?((Outlet)p).getDiscountString():"" %>
 					<%= p.getUnitPrice() %>元</span>
 					<br>
-					<span>庫存：<%= p.getStock()%><span id='stockSpan'>，紅色：2個</span></span>
+					<hr>
+					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
 					<form method='POST' action='<%= request.getContextPath() %>/member/cart.jsp'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
 					<!-- 顏色 -->
 					<div>
-						<label>顏色: </label>
+					<!-- 	<label>顏色: </label> -->
 						<% for(int i=0;i<p.getColorsList().size();i++){ 
 							Color color = p.getColorsList().get(i);
 						%>
@@ -201,17 +212,17 @@ $(document).ready(function(){
 						<label>數量: </label>
 						<input type='number' id='quantity' max='<%= p.getStock() %>' min='0' required>
 					</div>
-					<input type='submit' value="加入購物車">
+					<div class='productDescription'>					
+					<%= p.getDescription() %>
+				</div>
+					<input type='submit' class="addcart" value="加入購物車">
 					</form>
 				</div>
 </div>					
 			</div>
-				<div class='productDescription'>					
-					<%= p.getDescription() %>
-				</div>
 				<%}%>
-			
 		</article> 
+
         <%@ include file="/subviews/footer.jsp" %>
 	</body>
 </html>
