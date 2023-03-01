@@ -18,9 +18,12 @@
 	    top: 0;
 	    left: 45%;
 	    }
+	    a:visited {
+	    color:red
+	    }
 </style>
 <body>
-	<img alt="" src="images/fish.gif">
+	<img alt="" src="images/loadingimg.gif">
 	<header>
 			<h1>註冊成功</h1>
 			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href='index.jsp'>首頁</a></span>

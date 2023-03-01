@@ -74,7 +74,8 @@ public class Customer {
 		}
 	}
 	
-	private static final String ID_PATTERN = "[A-Z][1289]\\d{8}";
+	public static final String ID_PATTERN = "[A-Z][1289]\\d{8}";
+	public static final int MAX_ID_LENGTH = 10;
 	public static boolean checkId(String id) {
 		if(id!=null && id.matches(ID_PATTERN)) {
 			//1.將id第0碼字元轉成對應的整數(10~35)

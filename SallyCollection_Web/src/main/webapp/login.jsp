@@ -28,14 +28,15 @@
       var maxDate= y+"-"+m+"-"+d;
       // alert(maxDate);
 /*       birthday.setAttribute=("max",maxDate); */
-  	  birthday.setAttribute=("max",'<%= LocalDate.now().minusYears(Customer.MIN_AGE) %>'); 
-<%--   
-	  $("input[name ='id']").attr('pattern',<%=Customer.ID_PATTERN%>);
+  	  birthday.setAttribute=("max",'<%= LocalDate.now().minusYears(Customer.MIN_AGE) %>');   
+<%-- 	  $("input[name ='id']").attr('pattern',<%=Customer.ID_PATTERN%>);
 	  $("input[name ='id']").attr('maxlength',<%=Customer.MAX_ID_LENGTH %>);
-	  $("input[type ='password']").attr('minlength',<%=Customer.MIN_PWD_LENGTH %>);
+	   --%>
+	  /* 無法連到，現在是直接加在底下 */
+<%-- 	  $("input[type ='password']").attr('minlength',<%=Customer.MIN_PWD_LENGTH %>);
   	  $("input[type ='password']").attr('maxlength',<%=Customer.MAX_PWD_LENGTH %>); 
-   	  $("input[name ='name']").attr('minlength',<%=Customer.MIN_PWD_LENGTH %>);
-  	  $("input[name ='name']").attr('maxlength',<%=Customer.MAX_PWD_LENGTH %>);   --%>
+   	  $("input[name ='name']").attr('minlength',<%=Customer.MIN_NAME_LENGTH %>);
+  	  $("input[name ='name']").attr('maxlength',<%=Customer.MAX_NAME_LENGTH %>);   --%>
 	  $("#myShow").mousedown(showpassHandler)
 				  .mouseup(hidepassHandler)
 				  .mouseleave(hidepassHandler);
@@ -145,12 +146,12 @@
                                 <label for="account">信箱</label>
                               </div>
                               <div class="txt_field">
-                                <input type="text" required name="password">
+                                <input type="password" required name="password" minlength="<%=Customer.MIN_PWD_LENGTH %>" maxlength="<%=Customer.MAX_PWD_LENGTH %>">
                                 <span></span>
                                 <label for="password">密碼</label>
                               </div>
                               <div class="txt_field">
-                                <input type="text" required name="name">
+                                <input type="text" required name="name"  minlength="<%=Customer.MIN_NAME_LENGTH %>" maxlength="<%=Customer.MAX_NAME_LENGTH %>">
                                 <span></span>
                                 <label for="name">姓名</label>
                               </div>
