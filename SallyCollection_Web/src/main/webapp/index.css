@@ -376,9 +376,9 @@ list-style: none;
 
 .productItem{
     display:inline-block;
-    width: 20%;
+    width: 20.1%;
     padding: 2%;
-    margin-right:11.5px;
+    margin-left:11.5px;
     vertical-align:top;
 }
 .productItem h1{

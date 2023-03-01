@@ -41,10 +41,10 @@
        <div class="index_h1">
           <h1>Made by Korea just for you.</h1>
           <p>
-          歡迎Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium accusantium culpa, maiores commodi iste dolorum. Numquam, alias excepturi. Hic, dolores aperiam enim sit architecto dolor animi? Tempore magni dolorum distinctio?
+          “Nice to meet  Sally's Collection” Sally's Collection 向世界介紹了韓國時尚，為您的衣櫥帶來一股清新的空氣。獨特的剪裁、吸睛的圖案、奇特的造型，每一件單品都為升級版的自己而生！你準備好與眾不同了嗎？
           </p>
        </div>
-        <img src="images/indexdetai.jpg"style="width: 100vw;height: 600px;">       
+        
        <img src="images/hackimg.jpg" style="margin: 0 auto;display: block;">
        <div style="text-align:center">
               <h1>SHOP WITH SALLY</h1>
@@ -62,8 +62,15 @@
 			  <span>We inspect every products before sending your order.</span>
        </div>
 
-        <img src="images/homedetail.jpg" style="margin: 0 auto;display: block;">
-
+     <!--    <img src="images/homedetail.jpg" style="margin: 0 auto;display: block;"> -->
+  		<img src="images/indexdetai.jpg"style="width: 100vw;margin-top: 10%;"> 
+  		<div style="background-image: url(images/indexdetaillbg.jpg);background-attachment: fixed;background-position: bottom center;width: 100vw;">
+  		  <img src="images/indexdetail2.png"style="margin: 0 auto;display: block;"> 	
+  		</div>
+<img src="images/indexdetail1.jpg"style="width: 100vw;"> 
+  		<div style="background-image: url(images/indexdetaillbg.jpg);background-attachment: fixed;background-position: bottom center;width: 100vw;">
+  		  <img src="images/indexdetail3.png"style="margin: 0 auto;display: block;width:30%;"> 	
+  		</div>
 <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 
