@@ -15,7 +15,7 @@ class ProductsDAO{
 	
 	private static final String SELECT_ALL_PRODUCTS="SELECT id, name, unit_price, stock, description, photo_url, "
 			+ "	launch_date, category, discount\n"
-			+ "FROM products_view;";
+			+ "FROM products_view ";
 	 List<Product> selectALLProducts() throws VGBException{
 		 List<Product> list =new ArrayList<>();
 		 

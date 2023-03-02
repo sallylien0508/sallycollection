@@ -31,6 +31,9 @@
                 }
               };
           }
+			function getByCaegory(category){
+				location.href='?category=' + encodeURI(category); 
+			}
           var index = 0;
           function runHandler(){
             //console.log("timeout");
@@ -39,8 +42,8 @@
             $("#myImg").attr("src","images/"+ imageAr[index]);
           }
           function topFunction() {
-        	  document.body.scrollTop = 0; // For Safari
-        	  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        	  document.body.scrollTop = 600; // For Safari
+        	  document.documentElement.scrollTop = 600; // For Chrome, Firefox, IE and Opera
         	}
           </script>
           <style>
@@ -97,9 +100,9 @@
             <ul class="num">
                     <!-- <h2>類別</h2> -->
                     <li class="productlist"><a href = '?'>所有商品 </a></li>
-                    <li class="productlist"><a href = '?category=本日精選'>本日精選 </a></li>
-                    <li class="productlist"><a href = '?category=人氣推薦'>人氣推薦 </a></li>
-                    <li class="productlist"><a href = '?category=新品上市'>新品上市 </a></li>
+                    <li class="productlist"><a href = 'javascript:getByCaegory("本日精選")'>本日精選</a></li>
+                    <li class="productlist"><a href = 'javascript:getByCaegory("人氣推薦")'>人氣推薦</a></li>
+                    <li class="productlist"><a href = 'javascript:getByCaegory("新品上市")'>新品上市</a></li>
             </ul>
         </div>
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">
