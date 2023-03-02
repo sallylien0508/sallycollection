@@ -22,6 +22,14 @@
         		  $(".sidebar").slideToggle();
         		   
         		  });
+            
+            window.onscroll = function() {
+                if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+                  document.getElementById("myBtn").classList.add("show");
+                } else {
+                  document.getElementById("myBtn").classList.remove("show");
+                }
+              };
           }
           var index = 0;
           function runHandler(){
@@ -30,12 +38,30 @@
             index%=imageAr.length;//3
             $("#myImg").attr("src","images/"+ imageAr[index]);
           }
+          function topFunction() {
+        	  document.body.scrollTop = 0; // For Safari
+        	  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        	}
           </script>
           <style>
           ::placeholder {
 			  color: white;
 			}
-          
+		  #myBtn {
+		  display: none; /* 隱藏按鈕 */
+		  position: fixed; /* 固定按鈕位置 */
+		  bottom: 40px; /* 將按鈕放在距離底部 20px 的位置 */
+		  right: 80px; /* 將按鈕放在距離右側 30px 的位置 */
+		  z-index: 1; /* 將按鈕放在其他內容上面 */
+		}
+		
+		#myBtn.show {
+		  display: block;
+		}
+		
+		#myBtn:hover {
+		  color: white;
+		}
           </style>
 	</head>
 
@@ -98,7 +124,7 @@
                 <a href='product_detail.jsp?productId=<%= p.getId()%>'>
                 <img class="productimg" src="<%= p.getPhotoUrl() %>" alt="">
                 <ul class="prodcontan">
-                  <li class="name"> <%= p.getName() %></li>
+                  <li class="name"> <%= p.getName() %>(<%= p.getStock() %>)</li>
                   <li class="price">NT$ <% if(p instanceof Outlet){ %>
   					 <%= ((Outlet)p).getDiscountString()%>
                      <% } %>
@@ -113,7 +139,7 @@
               </div>
        <%} %>
         <%} %>
-       
+        <i class="fa-solid fa-circle-up" onclick="topFunction()" id="myBtn" title="Go to top" style="font-size: 50px;"></i>
         <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

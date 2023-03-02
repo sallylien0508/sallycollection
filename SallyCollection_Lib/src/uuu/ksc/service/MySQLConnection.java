@@ -8,7 +8,8 @@ import uuu.ksc.exception.VGBException;
 
 class MySQLConnection {
 	private static final String driver="com.mysql.cj.jdbc.Driver";//mysql 8.0.x
-	private static final String url = "jdbc:mysql://localhost:3306/ksc"; //mysql 8.0.12
+	private static final String url = "jdbc:mysql://localhost:3306/ksc"
+	+ "?sessionVariables=sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'"; //mysql 8.0.31
 	private static final String userid = "root";
 	private static final String pwd = "12345678"; //安裝mysql時設定的密碼
 	//TODO: 從外部設定檔讀取
