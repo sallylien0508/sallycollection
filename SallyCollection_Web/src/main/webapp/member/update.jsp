@@ -23,8 +23,8 @@
    <jsp:include page="/subviews/nav.jsp" />
        
        
-    <div class="loginandout">
-            <div id="tab2" class="tab_content">
+    <div class="loginandout" style="margin: 170px 15%;">
+            <div id="tab2" class="tab_content" style="height: 70%;">
              <div class="loginpostition">
         <% 
        	 List<String> register_errors = (List<String>)request.getAttribute("errors");
@@ -32,6 +32,7 @@
        		 <%= register_errors==null?"":register_errors %>
                     <h1>會員修改</h1>
                     <form method="post" action="update.do" id="register">
+                        <h4 style="margin: 0 10%;color: #712f2f;">*帳號無法修改</h4>                    
                         <div class="loginpostition_parent">
                             <div class="loginpostition_child">
                             <div class="txt_field">
@@ -45,13 +46,16 @@
                               </div>
                  <fieldset>
 					<legend>
-						<input type='checkbox' name='changePwd'>修改密碼
+						<input type='checkbox' name='changePwd' id='changePwd'>修改密碼
 					</legend>
 					<p>	
-						<label>密碼: </label>
-						<input autocomplete="on" id='password' name='password' type='password' disabled placeholder="請輸入密碼(注意大小寫)">
-						<input type='checkbox' id='showPwdBox'><label>顯示密碼</label>
-						<br><label>確認: </label>
+					
+						<label for="password">原密碼:</label>
+					 	<input type="password" required title="輸入密碼才以修改功能" type="password" disabled name="password"id='password' >
+					 	<input type='checkbox' id='showPwdBox'><label>顯示密碼</label>
+						<label>新密碼: </label>
+						<input autocomplete="on" id='password1' name='password1' type='password' disabled placeholder="請輸入密碼(注意大小寫)">
+						<br><label>確認新密碼: </label>
 						<input autocomplete="on" id='password2' name='password2' type='password' disabled placeholder="請再輸入密碼(注意大小寫)">
 					</p>
 				</fieldset>
@@ -104,6 +108,13 @@ function init()
 		  $(".sidebar").slideToggle();
 		   
 		  });
+    $("#changePwd").change(function() {
+        if (this.checked) {
+          $("#password,#password1, #password2").prop("disabled", false);
+        } else {
+          $("#password,#password1, #password2").prop("disabled", true);
+        }
+      });
   var today =new Date();
   var y =today.getYear()+1900-12;
   // 2023-12(要年滿12歲)
@@ -126,7 +137,7 @@ function repopulateFormData(){
 		$("input[name='id']").val('<%= request.getParameter("id")%>');
 		$("input[name='email']").val('<%= request.getParameter("email")%>');
 		<%-- $("input[name='password']").val('<%= request.getParameter("password")%>'); --%>
-		$("input[name='password']").val('<%= request.getParameter("password")%>');
+		$("input[name='password1']").val('<%= request.getParameter("password1")%>');
 		$("input[name='password2']").val('<%= request.getParameter("password2")%>');
 
 
@@ -145,6 +156,8 @@ function repopulateFormData(){
 		$("input[name='id']").val('<%= member.getId()%>');
 		$("input[name='email']").val('<%= member.getEmail()%>');
 		$("input[name='password']").val('<%= member.getPassword()%>');
+		$("input[name='password1']").val('<%= member.getPassword()%>');
+		$("input[name='password2']").val('<%= member.getPassword()%>');
 		$("input[name='name']").val('<%= member.getName()%>');				
 		$("#birthday").val('<%= member.getBirthday() %>');
 						
@@ -159,9 +172,11 @@ function showPassword(){
 	console.log(showPwdBox.checked);
 	if(showPwdBox.checked){
 		password.type='text';
+		password1.type='text';
 		password2.type='text';
 	}else{
 		password.type='password';
+		password1.type='password';
 		password2.type='password';
 	}
 }

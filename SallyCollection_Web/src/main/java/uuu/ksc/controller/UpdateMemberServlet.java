@@ -83,11 +83,12 @@ public class UpdateMemberServlet extends HttpServlet {
 		
 		
 		String changePwd = request.getParameter("changePwd");
+		String password1 = request.getParameter("password1");
 		if(changePwd!=null) {			
 			String password2 = request.getParameter("password2");
-			if(password==null || password.length()==0) {
+			if(password1==null || password1.length()==0) {
 				errors.add("必須輸入密碼");
-			}else if(!password.equals(password2)){
+			}else if(!password1.equals(password2)){
 				errors.add("必須輸入一致的新密碼與確認密碼");
 			}
 		}
@@ -108,7 +109,7 @@ public class UpdateMemberServlet extends HttpServlet {
 				c.setId(member.getId());
 				c.setEmail(email);
 				c.setName(name);
-				c.setPassword(changePwd!=null?password:member.getPassword());
+				c.setPassword(changePwd!=null?password1:member.getPassword());
 
 
 				c.setBirthday(birthday);

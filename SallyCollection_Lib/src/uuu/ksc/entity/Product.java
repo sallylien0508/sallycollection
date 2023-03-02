@@ -28,7 +28,7 @@ public class Product extends Object{
 	public List<Color> getColorsList(){
 	if(colorsMap.size()>0) {
 		List<Color> list = new ArrayList<>(colorsMap.values());//產生副本
-		Collections.sort(list);
+		Collections.sort(list);//依照colorOrdinal排序
 		return list;
 	}else {
 		return null;
