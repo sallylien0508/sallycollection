@@ -136,7 +136,7 @@
                 </a>
                 <%-- <a href="<%= request.getContextPath() %>/member/cart.jsp"> --%>
 	                <p>
-	                  <input type="submit" value="加入購物車"></input>
+	                  <a href="<%= request.getContextPath() %>/member/cart.jsp"><input type="submit" value="加入購物車"></input></a>
 	                </p>
                 <!-- </a> -->
               </div>

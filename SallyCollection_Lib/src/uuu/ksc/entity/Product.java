@@ -2,6 +2,7 @@ package uuu.ksc.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +112,16 @@ public class Product extends Object{
 		}
 	}
 	public int getStock() {		
+		if(colorsMap!=null && colorsMap.size()>0) {
+			int sum=0;
+			Collection<Color> collection =colorsMap.values();
+			for(Color color:collection) {
+				if(color!=null){
+					sum=sum +color.getStock();
+					}
+				}
+			return sum;
+		}
 		return stock;
 	}
 	public void setStock(int stock) {

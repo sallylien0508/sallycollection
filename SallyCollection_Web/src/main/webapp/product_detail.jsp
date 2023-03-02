@@ -203,9 +203,9 @@ $(document).ready(function(){
 							<label>Size</label>
 							<select id='size' name='size' onchange="changeColorDataSelect(this)">
 								<option value=''>請選擇...</option>	
-								<option value='S' data-stock='10' data-price='10'>S</option>
-								<option value='M' data-stock='20' data-price='10'>M</option>	
-								<option value='L' data-stock='20' data-price='10'>L</option>							
+								<option value='S' data-stock='10' data-list-price='10' data-price='10'>S</option>
+								<option value='M' data-stock='20' data-list-price='10'data-price='10'>M</option>	
+								<option value='L' data-stock='20' data-list-price='10'data-price='10'>L</option>							
 							</select>
 						</div> 
 					<div>
