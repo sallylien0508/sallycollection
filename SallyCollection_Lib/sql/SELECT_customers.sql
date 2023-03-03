@@ -31,12 +31,3 @@ SELECT id, email, password, name, birthday, gender
     WHERE id>='A123123123' AND password<='12345;lkj'
     ORDER BY birthday;
     
-    
-UPDATE customers
-set email=?, password=?, name=?, birthday=?, gender=?
-	,address=?, phone=?, blood_type=?, subscribed =?
-    WHERE id=?;
-    
-UPDATE customers
-set  email='aaa123@uuu.com', password=?, name=?, birthday=?
-    WHERE id='A123123123';

@@ -87,7 +87,7 @@
     <div class="loginandout">
         <ul id="tabs" class="tabs">
             <li><a href="#tab1" class="tab">會員登入</a></li>
-            <li><a href="#tab2" class="tab">手機號碼註冊</a></li>
+            <li><a href="#tab2" class="tab">註冊會員</a></li>
         </ul>
         <div id="container">
          <% 

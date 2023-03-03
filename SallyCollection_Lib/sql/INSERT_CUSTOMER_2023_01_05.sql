@@ -16,6 +16,7 @@ INSERT INTO customers (id,email,password,name,birthday,gender,
 INSERT INTO customers (id,email,password,name,birthday,gender,
 		address,phone,blood_type,subscribed) 
         VALUES ('A223456781','test03@uuu.com.tw','12345;lkj','林梅莉','2005-08-15','F','','02-25149191','AB',1);
+        
 INSERT INTO customers (id,email,password,name,birthday,gender,
 		address,phone,blood_type,subscribed) 
-        VALUES (?,?,?,?,?,?, ?,?,?,?);
+        VALUES (?,?,?,?,?,?,  ?,?,?,?);        

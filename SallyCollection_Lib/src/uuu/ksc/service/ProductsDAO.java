@@ -150,11 +150,32 @@ class ProductsDAO{
 			return list;
 		}
 		
+//		private static final String select_Product_By_Id=
+//				"SELECT id, name, unit_price, products.stock , description,products.photo_url, launch_date, category, discount, \n"
+//				+ "	product_id, color_name, product_colors.stock AS color_stock,product_colors.photo_url,  product_colors.photo_url AS color_photo,icon_url,ordinal\n"
+//				+ "FROM products\n"
+//				+ "	LEFT JOIN product_colors ON id =product_id  WHERE id = ? ORDER BY id,ordinal;";
+		
 		private static final String select_Product_By_Id=
-				"SELECT id, name, unit_price, products.stock , description,products.photo_url, launch_date, category, discount, \n"
-				+ "	product_id, color_name, product_colors.stock AS color_stock,product_colors.photo_url,  product_colors.photo_url AS color_photo,icon_url,ordinal\n"
-				+ "FROM products\n"
-				+ "	LEFT JOIN product_colors ON id =product_id  WHERE id = ? ORDER BY id,ordinal;";
+		"SELECT id, name, products.unit_price, "
+		+ "IFNULL(SUM(product_color_sizes.stock), products.stock)AS stock, description,"
+		+ "	products.photo_url, launch_date, category, discount,"
+		+ "    product_colors.product_id,  product_colors.color_name,  "
+		+ "    IFNULL(SUM(product_color_sizes.stock),product_colors.stock) AS color_stock, "
+		+ "    COUNT(product_color_sizes.size_name) AS size_count, "
+		//+ "    SUM(product_color_sizes.stock) AS size_total_stock, "
+		+ "    product_colors.photo_url AS color_photo, "
+		+ "    icon_url,  product_colors.ordinal "
+		+ "FROM products  "
+		+ "	LEFT JOIN product_colors ON id=product_id  "
+		+ "    LEFT JOIN product_color_sizes "
+		+ "			ON products.id = product_color_sizes.product_id "
+		+ "				AND (product_colors.color_name = product_color_sizes.color_name "
+		+ "					OR product_colors.color_name IS NULL )     "
+		+ "    WHERE id = ? "
+		+ "    GROUP BY color_name "
+		+ "    ORDER BY id,  product_colors.ordinal";
+				
 		public Product selectProductById(String id) throws VGBException{
 			Product p = null;		 
 			try (

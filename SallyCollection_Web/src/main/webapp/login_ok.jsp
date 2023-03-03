@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<title>會員註冊成功</title>
 	<script src="https://kit.fontawesome.com/e3d7510046.js"></script>
-<!-- 	<meta http-equiv="refresh" content="5; url=./">	 -->
+	<meta http-equiv="refresh" content="5; url=./">	
 </head>
 <style>
 	img{width:100vw;height:100vh}
