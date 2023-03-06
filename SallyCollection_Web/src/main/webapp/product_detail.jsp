@@ -262,8 +262,8 @@ $(document).ready(function(){
 					<span style="color:red;">元</span>
 					<br>
 					<hr>
-					<span style="font-size: 15px;float: right;">Ｍ：2個</span>
-					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span><span id='sizeStockSpan'></span>
+					<span id='sizeStockSpan'style="font-size: 15px;float: right;">Ｍ：2個</span>
+					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
 					<form method='POST' action='<%= request.getContextPath() %>/member/cart.jsp'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
