@@ -85,6 +85,7 @@
 			    top: -40px;
 			    left: 310px;
 			    cursor: pointer;
+			    width: 10%;
 			}
 			
 			.zoom-icon i {
@@ -168,15 +169,33 @@ $(document).ready(function(){
 		}
 		
 		function getSizeOption(productId,colorName){
-			alert("用ajaz 查詢size" +productId +","+colorName);
+		/* 	alert("用ajax 查詢size" +productId +","+colorName); */
+			$.ajax({
+				url:'get_size_option.jsp?productId='+productId+ "&colorName=" +colorName,
+				method:'GET'
+			}).done(getSizeOptionDoneHandler);
 		}
+		function getSizeOptionDoneHandler(result,textStatus,jqXhr){
+			console.log(result);
+			$("#size").empty();
+			$("#size").append(result);
+		}
+		
 		function showHandler(){
 			var smallSrc = $(this).attr("src");
 			$("#productImg").attr("src",smallSrc);
 			$(".smallPic").removeClass("selected");
 			$(this).addClass("selected");
 		}
-
+		function changeSizeSelect(theColorIcon){
+			var selectedSize = theColorIcon.selectedOptions[0];
+			console.log(selectedSize.value, selectedSize.dataset.listprice, selectedSize.dataset.price, selectedSize.dataset.stock);
+			var listPrice = document.getElementById("listPrice");
+			if(listPrice) listPrice.innerHTML=selectedSize.dataset.listprice;
+			unitPrice.innerHTML=selectedSize.dataset.price;
+			sizeStockSpan.innerHTML = selectedSize.value + ":" + selectedSize.dataset.stock+"個";
+			quantity.max=selectedSize.dataset.stock;
+		}		
 </script>
 	</head>
 	<body>
@@ -234,16 +253,16 @@ $(document).ready(function(){
 					<span style="font-size: 35px;"><%= p.getName() %></span>
 					<br>
 					<% if(p instanceof Outlet) {%>
-					<span style="text-decoration:line-through;"><%= ((Outlet)p).getListPrice()%>元</span>
+					<span style="text-decoration:line-through;" id='listPrice'><%= ((Outlet)p).getListPrice()%>元</span>
 					<%} %>
 					<br>
-					<span style="color:red;">NT$：
+					<span style="color:red;"id='unitPrice'>NT$：
 					<%= p instanceof Outlet?((Outlet)p).getDiscountString():"" %>
 					<%= p.getUnitPrice() %>元</span>
 					<br>
 					<hr>
 					<span style="font-size: 15px;float: right;">Ｍ：2個</span>
-					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
+					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span><span id='sizeStockSpan'></span>
 					<form method='POST' action='<%= request.getContextPath() %>/member/cart.jsp'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
@@ -264,7 +283,7 @@ $(document).ready(function(){
 					<% if (p.hasSize()) %>
 					<div>
 							<label>Size</label>
-							<select id='size' name='size' onchange="changeColorDataSelect(this)">
+							<select id='size' name='size' onchange="changeSizeSelect(this)">
 								<option value=''>請先選擇顏色...</option>	
 <!-- 								<option value='S' data-stock='10' data-list-price='10' data-price='10'>S</option>
 								<option value='M' data-stock='20' data-list-price='10'data-price='10'>M</option>	

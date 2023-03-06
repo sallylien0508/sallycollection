@@ -85,6 +85,7 @@
 			    top: -40px;
 			    left: 310px;
 			    cursor: pointer;
+			    width: 10%;
 			}
 			
 			.zoom-icon i {
