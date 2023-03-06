@@ -142,7 +142,7 @@
             	%>
             <div class="productItem">
                 <h1>
-                  本<br>日<br>精<br>選
+                  現<br>貨<br>供<br>應
                 </h1> 
                 <img class="productimgfav" src="https://hexschool.github.io/webLayoutTraining1st/student-week1/favorite_border.png" alt=""> 
                 <a href='product_detail.jsp?productId=<%= p.getId()%>'>

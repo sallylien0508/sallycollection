@@ -1,9 +1,9 @@
 package uuu.ksc.entity;
 
 public class Size {
-	private int productId;
-	private String colorName;
-	private String sizeName;
+	private int productId; //Pkey
+	private String colorName=""; //Pkey
+	private String sizeName; //Pkey
 	private int stock;
 	private double listPrice;
 	private double price;
@@ -17,6 +17,7 @@ public class Size {
 		return colorName;
 	}
 	public void setColorName(String colorName) {
+		if(colorName==null) colorName="";
 		this.colorName = colorName;
 	}
 	public String getSizeName() {
@@ -43,4 +44,40 @@ public class Size {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + productId;
+		result = prime * result + ((colorName == null) ? 0 : colorName.hashCode());
+		result = prime * result + ((sizeName == null) ? 0 : sizeName.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Size other = (Size) obj;
+		if (productId != other.productId)
+			return false;
+		if (colorName == null) {
+			if (other.colorName != null)
+				return false;
+		} else if (!colorName.equals(other.colorName))
+			return false;
+		if (sizeName == null) {
+			if (other.sizeName != null)
+				return false;
+		} else if (!sizeName.equals(other.sizeName))
+			return false;
+		return true;
+	}
+	
+	
 }
