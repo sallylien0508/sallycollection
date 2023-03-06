@@ -6,6 +6,7 @@ import java.util.List;
 import uuu.ksc.entity.Color;
 import uuu.ksc.entity.Outlet;
 import uuu.ksc.entity.Product;
+import uuu.ksc.entity.Size;
 import uuu.ksc.exception.VGBException;
 
 import java.sql.*;
@@ -108,6 +109,49 @@ class ProductsDAO{
 	 }
 	 	
 
+		private static final String select_Products_By_Keyword_AndCategory = SELECT_ALL_PRODUCTS 
+				+ " WHERE name LIKE ? AND category = ?";
+		List<Product> selectProductsByKeywordAndCategory(String keyword, String category) throws VGBException{
+			List<Product> list = new ArrayList<>();		
+			try (
+					Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
+					PreparedStatement pstmt = connection.prepareStatement(select_Products_By_Keyword_AndCategory); //3.準備指令
+				){			
+				//3.1 傳入?(1)的值
+				pstmt.setString(1, "%" + keyword +"%");
+				pstmt.setString(2, category);
+				
+				try(
+						ResultSet rs = pstmt.executeQuery(); //4.執行指令
+				){
+					//5. 處理rs
+					while(rs.next()) {
+						Product p;
+						int discount = rs.getInt("discount");
+						if(discount>0) {
+							p = new Outlet();
+							((Outlet)p).setDiscount(discount);						
+						}else p = new Product();					
+						
+						p.setId(rs.getInt("id"));
+						p.setName(rs.getString("name"));
+						p.setUnitPrice(rs.getDouble("unit_price"));
+						p.setStock(rs.getInt("stock"));
+						p.setDescription(rs.getString("description"));
+						p.setPhotoUrl(rs.getString("photo_url"));
+						p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+						p.setCategory(rs.getString("category"));
+						
+						list.add(p); //不要忘了
+					}				
+				}
+			} catch (SQLException e) {
+				throw new VGBException("[用關鍵字查詢產品]失敗", e);
+			}
+			
+			return list;
+		}
+		
 		private static final String select_Products_By_Category = SELECT_ALL_PRODUCTS 
 				+ " WHERE category = ?";
 		List<Product> selectProductsByCategory(String category) throws VGBException{
@@ -228,6 +272,51 @@ class ProductsDAO{
 				throw new VGBException("[用id查詢產品]失敗",e);
 			}
 			return p;
+		}
+
+		private static final String select_Product_Size_List =
+				"SELECT product_id, color_name, size_name, product_color_sizes.stock, "
+				+ "	product_color_sizes.unit_price AS list_price, "
+				+ "    (product_color_sizes.unit_price * (100-discount) / 100) as price, "
+				+ "    ordinal "
+				+ "	FROM product_color_sizes"
+				+ "		JOIN products ON product_color_sizes.product_id = products.id"
+				+ "    WHERE product_id=? AND color_name=?"
+				+ "    ORDER BY ordinal";
+		List<Size> selectProductSizeList(String productId, String colorName) 
+				throws VGBException{
+			List<Size> list = new ArrayList<>();
+			
+			
+			try (
+					Connection connection = MySQLConnection.getConnection();//1, 2 取得connection
+					PreparedStatement pstmt = connection.prepareStatement(select_Product_Size_List); //3.準備指令
+				){
+				//3.1 傳入?的值
+				pstmt.setString(1, productId);
+				pstmt.setString(2, colorName);
+				
+				//4.執行指令
+				try(
+						ResultSet rs = pstmt.executeQuery();
+				){
+					//5.處理rs
+					while(rs.next()) {
+						Size size = new Size();
+						size.setProductId(rs.getInt("product_id"));
+						size.setColorName(rs.getString("color_name"));
+						size.setSizeName(rs.getString("size_name"));
+						size.setStock(rs.getInt("stock"));
+						size.setListPrice(rs.getDouble("list_price"));
+						size.setPrice(rs.getDouble("price"));
+						list.add(size);
+					}
+				}			
+			} catch (SQLException e) {			
+				String msg = String.format("查詢指定產品(%s-%s)Size失敗", productId, colorName);
+				throw new VGBException(msg, e);
+			}		
+			return list;
 		}
 	}
 

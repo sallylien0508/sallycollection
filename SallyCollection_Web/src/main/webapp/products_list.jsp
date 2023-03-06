@@ -73,7 +73,7 @@
 
    <jsp:include page="/subviews/header.jsp" />  
    <jsp:include page="/subviews/nav.jsp" />
-       <%
+<%--        <%
 			//1.取得request中的form data
 			String keyword = request.getParameter("keyword");
 			String category = request.getParameter("category");
@@ -90,9 +90,30 @@
 			}
 			
 			//3.產生回應
+		%>		 --%>
+
+<%
+			//1.取得request中的form data
+			String keyword = request.getParameter("keyword");
+			String category = request.getParameter("category");
+			List<Product> list;
+		
+			//2.呼叫商業邏輯
+			ProductService service = new ProductService();			
+			if(keyword!=null && keyword.length()>0){
+				if(category!=null && category.length()>0){
+					list = service.getProductsByKeywordAndCategory(keyword, category);
+				}else{
+				list = service.getProductsByKeyword(keyword);
+				}
+			}else if(category!=null && category.length()>0){
+				list = service.getProductsByCategory(category);
+			}else{
+				list = service.getALLProducts();
+			}
+			
+			//3.產生回應
 		%>		
-
-
        
        
         <img id="myImg" src="images/css3dimg3.jpg">
