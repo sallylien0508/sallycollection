@@ -110,6 +110,14 @@
 			  	margin: 10% auto;
 			}
 		</style>
+		<%
+		String productId=request.getParameter("productId");
+		ProductService service = new ProductService();
+		Product p =null;
+		if(productId!=null && productId.length()>0){
+			p =service.getProductById(productId);
+		}
+		%>
 			<script>
 $(document).ready(function(){
 		  $("#memberName").click(function(){
@@ -140,14 +148,27 @@ $(document).ready(function(){
 	    $("#overlay").click(function() {
 	        $("#overlay").fadeOut();
 	    });
+	    
+	    
+	    <% if(p!=null && p.getcolorCount()==0 && p.hasSize()){%>
+	    getSizeOption($("input[name='productId']").val(),'');
+	    <%}%>
 	
 });
 		
-		function changeColorData(theColorIcon){
-			//alert(theColorIcon.dataset.photo);				
+		function changeColorData(theColorIcon,hasSize){
+			//alert(theColorIcon.dataset.photo);	
+			console.log($("input[name='productId']").val(),theColorIcon.title)
 			productImg.src = theColorIcon.dataset.photo;
 			stockSpan.innerHTML = "(" + theColorIcon.title + " " + theColorIcon.dataset.stock + "個)";
 			quantity.max=theColorIcon.dataset.stock;
+			if(hasSize){
+				getSizeOption($("input[name='productId']").val(),theColorIcon.title);
+			}
+		}
+		
+		function getSizeOption(productId,colorName){
+			alert("用ajaz 查詢size" +productId +","+colorName);
 		}
 		function showHandler(){
 			var smallSrc = $(this).attr("src");
@@ -163,14 +184,7 @@ $(document).ready(function(){
 		<jsp:include page="/subviews/header.jsp" />  
 	    <jsp:include page="/subviews/nav.jsp" />
 		</header>	
-		<%
-		String productId=request.getParameter("productId");
-		ProductService service = new ProductService();
-		Product p =null;
-		if(productId!=null && productId.length()>0){
-			p =service.getProductById(productId);
-		}
-		%>
+
 		<article>
 			<form id='searchForm' action='products_list.jsp' method='GET'  style="text-align:right;margin-top:7%;margin-bottom: 2%;">
 			    <input type='search' name='keyword' placeholder='請輸入查詢關鍵字...' size="50">
@@ -241,12 +255,13 @@ $(document).ready(function(){
 						%>
 						<label>
 						<input type='radio' name='color' required value='<%= color.getName() %>'>
-						<img class="productIcon" title='<%= color.getName() %>' src='<%= color.getIconUrl()==null?color.getPhotoUrl():color.getIconUrl() %>' data-photo='<%= color.getPhotoUrl() %>' data-stock='<%= color.getStock() %>' onclick='changeColorData(this)'>
+						<img class="productIcon" title='<%= color.getName() %>' src='<%= color.getIconUrl()==null?color.getPhotoUrl():color.getIconUrl() %>' data-photo='<%= color.getPhotoUrl() %>' data-stock='<%= color.getStock() %>' onclick='changeColorData(this,<%=p.hasSize()%>)'>
 						</label>
 							<%} %>
 					</div>
 					<%} %>
 					<!-- size -->
+					<% if (p.hasSize()) %>
 					<div>
 							<label>Size</label>
 							<select id='size' name='size' onchange="changeColorDataSelect(this)">

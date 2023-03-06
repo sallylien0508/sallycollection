@@ -25,6 +25,7 @@
 				  border-collapse: collapse;
 				  width: 80%;
 				  margin: auto;
+				  background-color: white;
 				}
 				
 				#cart td, #cart th {
@@ -41,14 +42,14 @@
 				#cart caption{
 				  padding-top: 12px;
 				  padding-bottom: 12px;				  
-				  background-color: #04AA6D;
+				  background-color: #462e25;
 				  color: white;
 				}
 				
 				#cart th{
 				  padding-top: 12px;
 				  padding-bottom: 12px;				  
-				  background-color: darkgray;
+				  background-color: #af3c15;
 				  color: white;
 				}
 				

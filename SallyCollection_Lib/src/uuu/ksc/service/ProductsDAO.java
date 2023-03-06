@@ -209,6 +209,9 @@ class ProductsDAO{
 						//System.out.println(p);
 						//System.out.printf("顏色 %s,%s,%s,%s\n",rs.getString("product_id"),rs.getString("product_name"),rs.getString("product_stock"),rs.getString("product_photo"));
 						//list.add(p); //不要了
+					
+						//檢查是否有size
+						p.setHasSize(rs.getInt("size_count")>0);
 						String colorName = rs.getString("color_name");
 						if(colorName!=null) {
 							Color color =new Color();

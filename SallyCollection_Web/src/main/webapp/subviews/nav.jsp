@@ -17,7 +17,7 @@
               <div class="navitem">
                 <div class="navitem__icon"></div>
                 <i class="fa fa-pencil-square" style="font-size:30px; color: wheat;"></i>
-                <a class=navitem__text href="<%= request.getContextPath() %>/Untitled-8.html">關於我們</a>
+                <a class=navitem__text href="<%= request.getContextPath() %>/AboutUs.jsp">關於我們</a>
               </div>
                 <div class="navitem">
                   <div class="navitem__icon"></div>
@@ -34,7 +34,7 @@
                <div class="navitem">
                 <div class="navitem__icon"></div>
                 <i class="fa fa-pencil-square" style="font-size:30px; color: wheat;"></i>
-                <a class=navitem__text href="<%= request.getContextPath() %>/Untitled-8.html">關於我們</a>
+                <a class=navitem__text href="<%= request.getContextPath() %>/AboutUs.jsp">關於我們</a>
               </div>
                 <div class="navitem">
                   <div class="navitem__icon"></div>

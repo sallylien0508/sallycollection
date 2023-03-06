@@ -20,7 +20,16 @@ public class Product extends Object{
 	private LocalDate launchDate;
 	private String category; //必要
 	private Map<String, Color> colorsMap=new HashMap<>();
+	private boolean hasSize;
 	
+	public boolean hasSize() {
+		return hasSize;
+	}
+
+	public void setHasSize(boolean hasSize) {
+		this.hasSize = hasSize;
+	}
+
 	//集合型態的attribute，getter不可直接回傳正本
 //	public Map<String, Color> getColorsMap() {
 //		//TODO:回傳副本
@@ -170,6 +179,7 @@ public class Product extends Object{
 				+ ",\n 上架日期=" + launchDate
 				+ ", 分類=" + category 
 				+",\n colorsMap=" + this.getColorsList()
+				+",\n有size:"+ hasSize()
 				+ "]";
 	}
 
