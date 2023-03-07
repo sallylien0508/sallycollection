@@ -34,4 +34,10 @@ public class ProductService {
 		
 		return dao.selectProductSizeList(productId,colorName);
 	}
+	public Size getProductSize(String productId, String colorName, String sizeName )		throws VGBException{
+		if(productId==null) throw new IllegalArgumentException("查詢產品尺寸時，productId不得為null");
+		if(colorName==null) colorName="";
+		
+		return dao.selectProductSize(productId, colorName, sizeName);
+	}
 }

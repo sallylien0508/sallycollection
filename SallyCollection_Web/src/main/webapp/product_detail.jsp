@@ -264,7 +264,7 @@ $(document).ready(function(){
 					<hr>
 					<span id='sizeStockSpan'style="font-size: 15px;float: right;"></span>
 					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
-					<form method='POST' action='<%= request.getContextPath() %>/member/cart.jsp'>
+					<form method='POST' action='./add_cart.do'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
 					<!-- 顏色 -->
@@ -293,7 +293,7 @@ $(document).ready(function(){
 						</div> 
 					<div>
 						<label>數量: </label>
-						<input type='number' id='quantity' max='<%= p.getStock() %>' min='0' required>
+						<input type='number' id='quantity'name='quantity' max='<%= p.getStock() %>' min='0' required>
 					</div>
 					<div class='productDescription'>					
 					<%= p.getDescription() %>

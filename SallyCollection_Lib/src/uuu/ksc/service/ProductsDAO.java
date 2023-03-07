@@ -313,10 +313,52 @@ class ProductsDAO{
 					}
 				}			
 			} catch (SQLException e) {			
-				String msg = String.format("查詢指定產品(%s-%s)Size失敗", productId, colorName);
+				String msg = String.format("查詢指定產品(%s-%s)SizeList失敗", productId, colorName);
 				throw new VGBException(msg, e);
 			}		
 			return list;
+		}
+		
+		
+		private static final String select_Product_Size =
+				"SELECT product_id, color_name, size_name, product_color_sizes.stock, "
+				+ "	product_color_sizes.unit_price AS list_price, "
+				+ "    (product_color_sizes.unit_price * (100-discount) / 100) as price, "
+				+ "    ordinal "
+				+ "	FROM product_color_sizes"
+				+ "		JOIN products ON product_color_sizes.product_id = products.id"
+				+ "    WHERE product_id=? AND color_name=? AND size_name=?";
+		 Size selectProductSize(String productId, String colorName, String sizeName) throws VGBException {
+			Size size =null;
+			try (
+					Connection connection = MySQLConnection.getConnection();//1, 2 取得connection
+					PreparedStatement pstmt = connection.prepareStatement(select_Product_Size); //3.準備指令
+				){
+				//3.1 傳入?的值
+				pstmt.setString(1, productId);
+				pstmt.setString(2, colorName);
+				pstmt.setString(3, sizeName);
+				
+				//4.執行指令
+				try(
+						ResultSet rs = pstmt.executeQuery();
+				){
+					//5.處理rs
+					while(rs.next()) {
+						size = new Size();
+						size.setProductId(rs.getInt("product_id"));
+						size.setColorName(rs.getString("color_name"));
+						size.setSizeName(rs.getString("size_name"));
+						size.setStock(rs.getInt("stock"));
+						size.setListPrice(rs.getDouble("list_price"));
+						size.setPrice(rs.getDouble("price"));
+					}
+				}			
+			} catch (SQLException e) {			
+				String msg = String.format("查詢指定產品(%s-%s)Size失敗", productId, colorName,sizeName);
+				throw new VGBException(msg, e);
+			}	
+			return size;
 		}
 	}
 

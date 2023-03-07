@@ -41,6 +41,34 @@ public class shoppingCart {
 		Integer qty =cartMap.get(item);
 		return qty!=null?qty:0;
 	}
+
+	public Double getListPrice(CartItem item) {
+		if(item.getProduct() instanceof Outlet) {	
+			return item.getListPrice();
+			
+		}else {
+			return item.getUnitPrice();
+		}
+	}	
+	
+	public String getDiscountString(CartItem item) {
+		if(!(item.getProduct() instanceof Outlet)) {	
+			return item.getDiscountString();
+			
+		}else {
+			return item.getDiscountString();
+		}
+	}		
+	
+	public Double getUnitPrice(CartItem item) {
+		if(item.getProduct() instanceof Outlet) {	
+			return item.getUnitPrice();
+			
+		}else {
+			return item.getUnitPrice();
+		}
+	}	
+	
 	public Set<CartItem> getCartItemSet() {//取得購物明細cartItem清單，不會重複主鍵值那些，沒數量
 		return new HashSet<> (cartMap.keySet());//副本
 //		return cartMap.keySet();//正本，不得使用，應該要回傳副本
@@ -54,7 +82,7 @@ public class shoppingCart {
 //以下3個business method（自己打）
 		public double getAmount(CartItem item) {//各項產品數量加起來總金額
 			if(item==null) throw new IllegalArgumentException("取得明細小計金額時，cartItem物件不得為null");
-			double amount = item.getUnitPrice()* getQuantity(item);
+			double amount = this.getUnitPrice(item)* getQuantity(item);
 			return amount;
 		}
 		public double getTotalAmount() {//全部產品加起來總金額
@@ -91,20 +119,23 @@ public class shoppingCart {
 		if(p.getcolorCount()>0 &&colorName!=null) {
 			color = p.findColor(colorName);
 			if(color==null) {
-				String msg = String.format("加入購物車時，有顏色的產品(%s)，無此顏色(%s)", p.getId(),colorName);
+				String msg = String.format("加入購物車時失敗，有顏色的產品(%s)，無此顏色(%s)", p.getId(),colorName);
 				throw new VGBInvalidDataException(msg);
 			}
 		
 		}else if(p.getcolorCount()>0 && colorName ==null) {
-			String msg = String.format("加入購物車時，有顏色的產品(%s)，必須選擇顏色(%s)", p.getId(),colorName);
+			String msg = String.format("加入購物車時失敗，有顏色的產品(%s)，必須選擇顏色(%s)", p.getId(),colorName);
 			throw new VGBInvalidDataException(msg);
 		}
 //		else if(p.getcolorCount()==0 && colorName!=null) {
-//			String msg = String.format("加入購物車時，沒有顏色的產品(%s)，不能選顏色(%s)", p.getId(),colorName);
+//			String msg = String.format("加入購物車時失敗，沒有顏色的產品(%s)，不能選顏色(%s)", p.getId(),colorName);
 //			throw new VGBInvalidDataException(msg); 
 //		}
 		if(p.getcolorCount()>0 && p.hasSize() && size==null) {
-			String msg = String.format("加入購物車時，有顏色/Size的產品(%s)，必須選擇Size，不得為null(%s)", p.getId(),colorName,size);
+			String msg = String.format("加入購物車時失敗，有顏色(%s)/Size的產品(%s)，必須選擇Size", p.getId(),colorName);
+			throw new VGBInvalidDataException(msg);	
+		}else if(p.getcolorCount()>0 && p.hasSize() && size==null) {
+			String msg = String.format("加入購物車時失敗，無顏色/Size的產品(%s)，必須選擇Size()", p.getId());
 			throw new VGBInvalidDataException(msg);	
 		}
 		CartItem item = new CartItem();
@@ -120,7 +151,7 @@ public class shoppingCart {
 	}
 	@Override
 	public String toString() {
-		return "購物車 [訂購人=" + member + "\n, 購物車內容: =" + cartMap + "]";
+		return "購物車 [訂購人=" + member + "\n, 購物車內容: =" + cartMap + "\n,共" + size() +"項, "+","+getTotalQuantity()+"件\n 總金額"+getTotalAmount()+"元]";
 	}
 	
 }

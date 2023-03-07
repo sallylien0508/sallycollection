@@ -1,3 +1,6 @@
+<%@page import="uuu.ksc.entity.Customer"%>
+<%@page import="uuu.ksc.entity.CartItem"%>
+<%@page import="uuu.ksc.entity.shoppingCart"%>
 <%@ page pageEncoding="UTF-8"%>
 <html>
     <head>
@@ -62,6 +65,18 @@
 	    <jsp:include page="/subviews/nav.jsp" />
 	</header>	  
         <article>
+        <% 
+        shoppingCart cart = (shoppingCart)session.getAttribute("cart");
+        
+        Customer member = (Customer)session.getAttribute("member");
+        if(cart!=null && member!=null){
+        	cart.setMember(member);
+        }
+        %>
+<%--         <%= cart %> --%>
+<% if(cart ==null || cart.isEmpty()){ %>
+<p>購物車是空的!</p>
+<%}else{  %>
 			<table id='cart'>
 				<caption>購物明細</caption>
 				<thead>
@@ -74,114 +89,36 @@
 					</tr>
 				</thead>
 				<tbody>	
+					<% for(CartItem cartItem:cart.getCartItemSet()){%>
 					<tr>				
 						<td>
-							<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-							Java 7 教學手冊 第五版(附光碟)
+							<img src='<%= request.getContextPath() %>/<%= cartItem.getPhotourl() %>'>
+							<%= cartItem.getProductName() %>
 						</td>
 						<td></td>
 						<td>
-							定價：650.0元<br>
-							優惠價：9折<br>
-							585.0元
+							定價:<%= cart.getListPrice(cartItem) %>元<br>
+							<%= cart.getDiscountString(cartItem) %>
+							優惠價:<%= cart.getUnitPrice(cartItem) %>元
 						</td>
-						<td>2</td>
-						<td>1170.0</td>
-					</tr>	
-					<tr>
-						<td>
-						<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-						【德國LYRA】Groove三角洞洞色鉛筆
-						</td>
-						<td>紅</td>
-						<td>
-							定價：70.0元<br>
-							優惠價：9折<br>
-							63.0元
-						</td>
-						<td>1</td>
-						<td>63</td>
+						<td><%= cart.getQuantity(cartItem) %></td>
+						<td><%= cart.getAmount(cartItem) %></td>
 					</tr>
-					<tr>				
-						<td>
-							<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-							【德國LYRA】Groove三角洞洞色鉛筆
-						</td>
-						<td>藍</td>
-						<td>
-							定價：70.0元<br>
-							優惠價：9折<br>
-							63.0元
-						</td>
-						<td>1</td>
-						<td>63</td>
-					</tr>
-					<tr>									
-						<td>
-							<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>	
-							Pentel百點橡皮擦
-						</td>
-						<td>白/S</td>
-						<td>
-							定價：10元<br>
-							優惠價：8折<br>
-							8元
-						</td>
-						<td>1</td>
-						<td>8</td>
-					</tr>
-					<tr>				
-						<td>
-						<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-						Pentel百點橡皮擦
-						</td>
-						<td>白/M</td>
-						<td>
-							定價：15元<br>
-							優惠價：8折<br>
-							12元
-						</td>
-						<td>1</td>
-						<td>8</td>
-					</tr>
-					<tr>				
-						<td>
-						<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-						【德國LYRA】GROOVE三角洞洞色鉛筆(細) 24色
-						</td>
-						<td>24支裝</td>
-						<td>							
-							優惠價：380元
-						</td>
-						<td>2</td>
-						<td>380</td>
-					</tr>
-					<tr>				
-						<td>
-						<img src='<%= request.getContextPath() %>/images/snoopy_pink.jpg'>
-						【德國LYRA】GROOVE三角洞洞色鉛筆(細) 24色
-						</td>
-						<td>48支裝</td>
-						<td>							
-							優惠價：380元
-						</td>
-						<td>1</td>
-						<td>620</td>
-					</tr>								
+					<% }%>												
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="4">
-							共7項, 9件
+						<td colspan="3">
+							共<%=cart.size() %>項, <%=cart.getTotalQuantity() %>件
 						</td>
-						<td colspan="1">
-							總計: 1316元
+						<td colspan="2">
+							總計: <%=cart.getTotalAmount() %>元
 						</td>
 					</tr>
 				</tfoot>
 			</table>
+			<% } %>
 		</article>
-        </article>
        <%@ include file="/subviews/footer.jsp" %>
    
     </body>
