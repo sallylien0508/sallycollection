@@ -51,16 +51,28 @@
        <!-- 內容 -->
        <div style="display:flex;flex-direction: column;width: 100%;">
        <div class="index_h1">
-          <h1>Nice To Meet Sally's Collection?</h1>
-          <p>
-       Sally's Collection 由 Sally 於 2023 年創建。 我們是一群在首爾開始我們旅程的韓國時尚愛好者。 多年來，Sally's Collection 與世界各地的 K-fashion 愛好者建立了聯繫。
-          </p>
+          <h1>Q1. </h1>
+          <ul>
+		       <li>Sally's Collection 提供您簡單又安全的購物流程，親切易懂的指引式流程畫面，讓您充分享受便利的購物樂趣。</li>
+		       <li>購物方式：註冊帳號＞＞登入帳號（第一次購物請註冊會員)＞＞選擇商品＞＞加入購物車＞＞前往結帳＞＞填寫收件資訊＞＞完成購物</li>
+          </ul>
        </div>
        <div class="index_h1">
-          <h1>Made by Korea just for you.</h1>
+          <h1>Q7. 如何計算「七天鑑賞期」？</h1>
           <p>
-          “Nice to meet  Sally's Collection” Sally's Collection 向世界介紹了韓國時尚，為您的衣櫥帶來一股清新的空氣。獨特的剪裁、吸睛的圖案、奇特的造型，每一件單品都為升級版的自己而生！你準備好與眾不同了嗎？
-          </p>
+			根據消保法規定，lativ 提供七日鑑賞期權益。
+			於完成簽收取件的隔日起算至第7天止 (如您的收件地址有管理員代收，則以代收的隔日起算)。
+			 </p>
+			 <ul>
+				 <li>提醒您！以下情況將無法為您辦理退貨，煩請留意以免影響您的退貨權益。</li>
+				 <li>1.試穿時如您有化妝請特別小心，若衣物上沾有粉妝時，請恕無法接受退貨喔。</li>
+				 <li>2.非正常試穿，已長時間穿著、已有使用摺痕或髒污或味道。</li>
+				 <li>3.基於衛生原則，貼身衣物例如內衣褲、襪子，一但拆封即無法退貨。</li>
+				 <li>4.退回時，商品配件不全或吊牌已剪（襯衫等商品請務必退回所有包裝配件）。</li>
+				 <li>5.已在商品上加工，例如：繡花、裁剪、打印……等非lativ商品原樣（請確實驗收商品後再進行加工）。</li>
+				 <li>6.活動贈品未退回。</li>
+				 <li>7.超過七天鑑賞期。</li>
+			 </ul>
        </div>
        </div>
        		<div style="height: 580px;background-color:#d3d1ce; width: 30%;"></div>
