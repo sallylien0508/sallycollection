@@ -23,6 +23,56 @@ public class CartItem {
 	public void setSize(Size size) {
 		this.size = size;
 	}
+	
+	public String getPhotourl() {
+		if(color!=null && color.getPhotoUrl()!=null) {
+			return color.getPhotoUrl();
+		}else {
+			return product.getPhotoUrl();
+		}
+	}
+	public String getProductName() {
+		return product.getName();
+	}
+	public String getColorName() {
+		return color!=null?color.getName():"";
+	}
+	public String getSizeName() {
+		if(size!=null) {
+			String name=(color!=null?"/":"");
+			name +=size.getSizeName();
+			return name;
+		}
+
+		return "";
+	}
+	public Double getListPrice() {
+		if(size!=null) {
+			return size.getListPrice();
+		}else {
+			if(product instanceof Outlet) {
+				return((Outlet)product).getListPrice();
+			}else {
+				return null;			
+				}
+		}
+	}
+	public String getDiscountString() {
+		if(product instanceof Outlet) {
+				return((Outlet)product).getDiscountString();
+			}else {
+				return "";			
+				}
+		}
+	public Double getUnitPrice() {
+		if(size!=null) {
+			return size.getPrice();
+		}else {
+			return((Outlet)product).getUnitPrice();
+		}
+	}	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -61,6 +111,17 @@ public class CartItem {
 		} else if (!size.equals(other.size))
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "購物明細 [圖片網址=" + getPhotourl()
+		+ "\n, 名稱=" + getProductName()
+		+ ", 顏色=" + getColorName() 
+		+ ", size=" + getSizeName() 
+		+ "\n, 定價="+ getListPrice()
+		+ "\n, 優惠價=" + getDiscountString() 
+		+ ", " + getUnitPrice()
+		+ "]";
 	}
 	
 	
