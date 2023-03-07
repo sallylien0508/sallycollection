@@ -1,6 +1,7 @@
 package uuu.ksc.entity;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +13,7 @@ import uuu.ksc.service.ProductService;
 public class shoppingCart {
 	private Customer member;
 	private Map<CartItem, Integer> cartMap = new HashMap<>();
-				//10號產品(pk) 2個
+				//1產品(pk) ,數量
 	public Customer getMember() {
 		return member;
 	}
@@ -40,8 +41,9 @@ public class shoppingCart {
 		Integer qty =cartMap.get(item);
 		return qty!=null?qty:0;
 	}
-	public Set<CartItem> keySet() {//取得購物明細cartItem清單，不會重複主鍵值那些，沒數量
-		return cartMap.keySet();
+	public Set<CartItem> getCartItemSet() {//取得購物明細cartItem清單，不會重複主鍵值那些，沒數量
+		return new HashSet<> (cartMap.keySet());//副本
+//		return cartMap.keySet();//正本，不得使用，應該要回傳副本
 	}
 	
 	/**
