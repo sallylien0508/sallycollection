@@ -95,7 +95,7 @@
 							<img src='<%= request.getContextPath() %>/<%= cartItem.getPhotourl() %>'>
 							<%= cartItem.getProductName() %>
 						</td>
-						<td></td>
+						<td><%= cartItem.getColorName() %></td>
 						<td>
 							定價:<%= cart.getListPrice(cartItem) %>元<br>
 							<%= cart.getDiscountString(cartItem) %>
