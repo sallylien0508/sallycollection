@@ -35,15 +35,15 @@
       <p style="margin: 120px auto 2px;width: 50%;border-bottom: #111010f0 dotted;">About Us</p>
 <div style="display:flex">     
 		<div style="height: 580px;background-color: #d3d1ce; width: 30%;">
-		<div style="width: 60%; margin: 30px auto;">
+		<div style="width: 70%; margin: 30px auto;">
 			<a href="<%= request.getContextPath() %>/Aboutmembership.jsp"><span  style="color:#6a4d43;;font-size: 20px;margin-right: 20px;">如何加入會員</span>
 			<img id="slideRight" style="width:20%;position: relative;top: 8px;" src="images/arrow-right.png"></a>
 		</div>	
-		<div style="width: 60%; margin: 30px auto;">
+		<div style="width: 70%; margin: 30px auto;">
 			<a href="<%= request.getContextPath() %>/AboutShoppingProcess.jsp"><span style="color:#6a4d43;;font-size: 20px;margin-right: 20px;">購物流程問題</span>
 			<img id="slideRight" style="width:20%;position: relative;top: 8px;" src="images/arrow-right.png"></a>
 		</div>	
-		<div style="width: 60%; margin: 30px auto;">
+		<div style="width: 70%; margin: 30px auto;">
 			<a href="<%= request.getContextPath() %>/AboutReturnExchange.jsp"><span  style="color:#6a4d43;;font-size: 20px;margin-right: 20px;">退換貨及退款</span>
 			<img id="slideRight" style="width:20%;position: relative;top: 8px;" src="images/arrow-right.png"></a>
 		</div>	

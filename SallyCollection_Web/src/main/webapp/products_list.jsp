@@ -6,11 +6,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		 <link rel='stylesheet' type='text/css' href='./fancybox3/jquery.fancybox.css'>
 	    <link rel="stylesheet" href="index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>sally's collection</title>
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>
         <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
+        <script src='./fancybox3/jquery.fancybox.js'></script>
         <script>
           var imageAr = ["css3dimg3.jpg","css3dimg6.jpg","css3dimg3.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg6.jpg"]
           $(document).ready(init);
@@ -45,6 +47,33 @@
         	  document.body.scrollTop = 600; // For Safari
         	  document.documentElement.scrollTop = 600; // For Chrome, Firefox, IE and Opera
         	}
+			function getProductData(pid){
+				//alert('Hello, pid:' + pid); //for test
+				//同步GET請求
+				//location.href="product_detail.jsp?productId="+pid;
+				
+				//ajax送非同步GET請求
+				$.ajax({
+					url:"product_ajax.jsp?productId="+pid,
+					method: 'GET'					
+				}).done(getProductDataDoneHandler);
+			}
+			function getProductDataDoneHandler(result, txtStatus, xhr){
+				//console.log(result); //for test
+				//用fancybox來顯示
+				$("#fancyDialog").html(result);
+				$.fancybox.open({
+				    src  : '#fancyDialog',
+					'width':720,
+                    'height':560,
+				    type : 'inline',
+				    opts : {
+				      afterShow : function( instance, current ) {
+				        console.info('done!');
+			          }
+			        }
+			    });
+			}
           </script>
           <style>
           ::placeholder {
@@ -145,8 +174,12 @@
                   現<br>貨<br>供<br>應
                 </h1> 
                 <img class="productimgfav" src="https://hexschool.github.io/webLayoutTraining1st/student-week1/favorite_border.png" alt=""> 
-                <a href='product_detail.jsp?productId=<%= p.getId()%>'>
+               <%--  <a href='product_detail.jsp?productId=<%= p.getId()%>'> --%>
+               <a href='javascript:getProductData(<%= p.getId()%>)'>
                 <img class="productimg" src="<%= p.getPhotoUrl() %>" alt="">
+               </a>
+               
+               <a href='product_detail.jsp?productId=<%= p.getId()%>'> 
                 <ul class="prodcontan">
                   <li class="name"> <%= p.getName() %>(<%= p.getStock() %>)</li>
                   <li class="price">NT$ <% if(p instanceof Outlet){ %>
@@ -164,6 +197,7 @@
        <%} %>
         <%} %>
         <i class="fa-solid fa-circle-up" onclick="topFunction()" id="myBtn" title="Go to top" style="font-size: 50px;"></i>
+        <div id='fancyDialog'></div>
         <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

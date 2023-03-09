@@ -109,6 +109,16 @@ public class shoppingCart {
 		
 		
 //用mutatters方法取代集合型態屬性cartMap的setters:asscartItem,updateItem,removeCartItem,removeCartItem
+		
+	public void updateCartItem(CartItem currentItem,int quantity) throws VGBInvalidDataException {
+		Integer prevQty = cartMap.get(currentItem);//檢查有沒有舊的，找出之前加入的購買數量 
+		if(prevQty!=null) {//有找到之前加入的購買數量 ，才修改
+			cartMap.put(currentItem,quantity);
+		}	
+	}
+	public void removeCartItem(CartItem currentItem) throws VGBInvalidDataException {
+		cartMap.remove(currentItem);
+	}
 	public void addCartItem(Product p,String colorName, Size size) throws VGBInvalidDataException {
 		addCartItem(p,colorName,size,1);
 	}

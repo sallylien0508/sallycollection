@@ -23,7 +23,7 @@ public class CartItem {
 	public void setSize(Size size) {
 		this.size = size;
 	}
-	
+	/*根據畫面撰寫getter*/
 	public String getPhotourl() {
 		if(color!=null && color.getPhotoUrl()!=null) {
 			return color.getPhotoUrl();
@@ -71,7 +71,15 @@ public class CartItem {
 			return((Outlet)product).getUnitPrice();
 		}
 	}	
-	
+	public int getStock() {
+		if(size!=null) {
+			return size.getStock();
+		}else if(color!=null) {	
+			return color.getStock();
+		}else {			
+			return product.getStock();			
+		}
+	}
 	
 	@Override
 	public int hashCode() {
