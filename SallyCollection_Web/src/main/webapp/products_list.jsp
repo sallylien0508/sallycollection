@@ -74,6 +74,7 @@
 			        }
 			    });
 			}
+
           </script>
           <style>
           ::placeholder {
@@ -125,6 +126,7 @@
 			//1.取得request中的form data
 			String keyword = request.getParameter("keyword");
 			String category = request.getParameter("category");
+			String orderBy = request.getParameter("orderBy");
 			List<Product> list;
 		
 			//2.呼叫商業邏輯
@@ -137,9 +139,18 @@
 				}
 			}else if(category!=null && category.length()>0){
 				list = service.getProductsByCategory(category);
-			}else{
-				list = service.getALLProducts();
+			}else if (orderBy != null && orderBy.equals("highToLow")) {
+			    list = service.getHighToLow();
+			}else if (orderBy != null && orderBy.equals("lowTohigh")) {
+			    list = service.getLowToHigh();
+			}else {
+			    list = service.getALLProducts();
 			}
+
+				//list = service.getALLProducts(); 
+				//list = service.getHighToLow();
+				//list = service.getLowToHigh(); 
+		
 			
 			//3.產生回應
 		%>		
@@ -155,13 +166,16 @@
                     <li class="productlist"><a href = 'javascript:getByCaegory("新品上市")'>新品上市</a></li>
             </ul>
         </div>
+        <div style="text-align:right;margin-right:3%;margin-bottom:1%;"> 
+          <a href="products_list.jsp?orderBy=highToLow">價格高至低</a>
+          <a href="products_list.jsp?orderBy=lowTohigh">價格低至高</a>
+        </div>
+
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">
                 <input type='search' name='keyword' placeholder='請輸入查詢關鍵字...' size="50">
                 <button type="submit"><i class="fa fa-search"></i></button>         
-            </form>
+         </form>
    
-
-        
         <% if(list==null||list.size()==0){ %>
        		 <p>查無產品</p>
         <% }else{ %>
@@ -190,7 +204,7 @@
                 </a>
                 <%-- <a href="<%= request.getContextPath() %>/member/cart.jsp"> --%>
 	                <p>
-	                  <a href="<%= request.getContextPath() %>/member/cart.jsp"><input type="submit" value="加入購物車"></input></a>
+	                  <a href="<%= request.getContextPath() %>/product_detail.jsp?productId=<%= p.getId()%>"><input type="submit" value="View More"></input></a>
 	                </p>
                 <!-- </a> -->
               </div>

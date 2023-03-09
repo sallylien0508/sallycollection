@@ -40,4 +40,10 @@ public class ProductService {
 		
 		return dao.selectProductSize(productId, colorName, sizeName);
 	}
+	public List<Product> getHighToLow() throws VGBException{
+		return dao.selectHighToLow();
+	}
+	public List<Product> getLowToHigh() throws VGBException{
+		return dao.selectLowToHigh();
+	}
 }

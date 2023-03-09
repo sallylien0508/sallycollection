@@ -360,6 +360,81 @@ class ProductsDAO{
 			}	
 			return size;
 		}
+
+			private static final String selectHighToLow =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100 DESC;";
+				List<Product> selectHighToLow() throws VGBException{
+					 List<Product> list =new ArrayList<>();
+				try (
+						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
+						PreparedStatement pstmt = connection.prepareStatement(selectHighToLow); //3.準備指令
+					){			
+					//3.1 傳入?(0)的值
+					
+					try(
+							ResultSet rs = pstmt.executeQuery(); //4.執行指令
+					){
+						//5. 處理rs
+						while(rs.next()) {
+							Product p;
+							int discount = rs.getInt("discount");
+							if(discount>0) {
+								p = new Outlet();
+								((Outlet)p).setDiscount(discount);						
+							}else p = new Product();					
+							
+							p.setId(rs.getInt("id"));
+							p.setName(rs.getString("name"));
+							p.setUnitPrice(rs.getDouble("unit_price"));
+							p.setStock(rs.getInt("stock"));
+							p.setDescription(rs.getString("description"));
+							p.setPhotoUrl(rs.getString("photo_url"));
+							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+							p.setCategory(rs.getString("category"));
+							list.add(p); //不要忘了
+						}				
+					}
+				} catch (SQLException e) {
+					throw new VGBException("[用價格高至低查詢產品]失敗", e);
+				}
+				return list;
+			}		 
+				private static final String selectLowToHigh =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100";
+				List<Product> selectLowToHigh() throws VGBException{
+					 List<Product> list =new ArrayList<>();
+				try (
+						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
+						PreparedStatement pstmt = connection.prepareStatement(selectLowToHigh); //3.準備指令
+					){			
+					//3.1 傳入?(0)的值
+					
+					try(
+							ResultSet rs = pstmt.executeQuery(); //4.執行指令
+					){
+						//5. 處理rs
+						while(rs.next()) {
+							Product p;
+							int discount = rs.getInt("discount");
+							if(discount>0) {
+								p = new Outlet();
+								((Outlet)p).setDiscount(discount);						
+							}else p = new Product();					
+							
+							p.setId(rs.getInt("id"));
+							p.setName(rs.getString("name"));
+							p.setUnitPrice(rs.getDouble("unit_price"));
+							p.setStock(rs.getInt("stock"));
+							p.setDescription(rs.getString("description"));
+							p.setPhotoUrl(rs.getString("photo_url"));
+							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+							p.setCategory(rs.getString("category"));
+							list.add(p); //不要忘了
+						}				
+					}
+				} catch (SQLException e) {
+					throw new VGBException("[用價格低質高查詢產品]失敗", e);
+				}
+				return list;
+			}					
 	}
 
 
