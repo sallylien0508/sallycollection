@@ -427,6 +427,7 @@ class ProductsDAO{
 							p.setPhotoUrl(rs.getString("photo_url"));
 							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
 							p.setCategory(rs.getString("category"));
+							p.setGendercategory("gendercategory");
 							list.add(p); //不要忘了
 						}				
 					}
@@ -434,7 +435,53 @@ class ProductsDAO{
 					throw new VGBException("[用價格低質高查詢產品]失敗", e);
 				}
 				return list;
-			}					
+			}
+				 private static final String selectgendercategory="SELECT * FROM ksc.products where category Like ? AND gendercategory  LIKE ? ";
+				 	List<Product> selectgendercategory(String category,String gendercategory) throws VGBException{
+				 			 List<Product> list =new ArrayList<>();
+				 			 try ( Connection connection = MySQLConnection.getConnection();//1,2取得連線
+				 				   PreparedStatement pstmt = connection.prepareStatement(selectgendercategory);//3. 準備指令
+				 					 ){
+				 				 //3.1傳入?(1個)的值
+				 				 pstmt.setString(1, category);
+				 				 pstmt.setString(2, gendercategory);
+				 				 try(			
+				 				 ResultSet rs = pstmt.executeQuery();//4.執行指令
+				 				 ){
+				 					 //5. 處理rs
+				 					 while(rs.next()) {
+				 						 Product p;
+				 						 int discount =rs.getInt("discount");
+				 						 if(discount>0) {
+				 							 p = new Outlet();
+				 							 ((Outlet)p).setDiscount(discount);
+//				 							 Outlet outlet = new Outlet();
+//				 							 outlet.setDiscount(discount);
+//				 							 p =outlet;
+				 							 
+				 						 }else {
+				 							 p = new Product();
+				 						 }
+				 						 p.setId(rs.getInt("id"));
+				 						 p.setName(rs.getString("name"));
+				 						 p.setUnitPrice(rs.getDouble("unit_price"));
+				 						 p.setStock(rs.getInt("stock"));
+				 						 p.setDescription(rs.getString("description"));
+				 						 p.setPhotoUrl(rs.getString("photo_url"));
+				 						 p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+				 						 p.setCategory(rs.getString("category"));
+				 						 p.setGendercategory("gendercategory");
+				 						 list.add(p);
+				 						 
+				 					 }
+				 				 }
+
+				 			} catch (SQLException e) {
+				 				throw new VGBException("查詢全部產品失敗",e);
+				 			}
+				 			 
+				 			 return list;
+				 }
 	}
 
 

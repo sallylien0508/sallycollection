@@ -46,4 +46,7 @@ public class ProductService {
 	public List<Product> getLowToHigh() throws VGBException{
 		return dao.selectLowToHigh();
 	}
+	public List<Product> getgendercategory(String category,String gendercategory) throws VGBException{
+		return dao.selectgendercategory(category,gendercategory);
+	}
 }

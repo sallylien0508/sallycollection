@@ -21,6 +21,7 @@ public class Product extends Object{
 	private String category; //必要
 	private Map<String, Color> colorsMap=new HashMap<>();
 	private boolean hasSize;
+	private String gendercategory;
 	
 	public boolean hasSize() {
 		return hasSize;
@@ -203,6 +204,14 @@ public class Product extends Object{
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public String getGendercategory() {
+		return gendercategory;
+	}
+
+	public void setGendercategory(String gendercategory) {
+		this.gendercategory = gendercategory;
 	}
 	
 	
