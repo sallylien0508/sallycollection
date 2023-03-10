@@ -63,7 +63,8 @@
           </p>
        </div>
        </div>
-       		<div style="height: 580px;background-color:#d3d1ce; width: 30%;"></div>
+       		<div style="height: 580px;background-color:#d3d1ce; width: 30%;"><img alt="" src="<%= request.getContextPath() %>/images/aboutQA.png" style="width: 80%;position: relative;
+    top: 30px;left: 30px;"></div>
 </div> 
  
  

@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <!-- nav.jsp start -->
                 <% Customer member= (Customer)session.getAttribute("member"); 
+               /*  shoppingCart cart=(shoppingCart)session.getAttribute("cart"); */
         String gender = "";
         if(member!=null){
         	if(member.getGender() ==Customer.FEMALE){
@@ -22,7 +23,9 @@
                 <div class="navitem">
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
-                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單</a>
+                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
+                       ${sessionScope.cart.getTotalQuantity()}
+                  </a>
                 </div>
                 <div class="navitem">
                   <div class="navitem__icon"></div>
@@ -39,7 +42,10 @@
                 <div class="navitem">
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
-                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單</a>
+                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
+                   ${sessionScope.cart.getTotalQuantity()}
+             <%--      <%= cart!=null?cart.getTotalQuantity():"" %> --%>
+                  </a>        
                 </div>
               <div class="navitem" id ='memberName'>
                   <div class="navitem__icon"></div>

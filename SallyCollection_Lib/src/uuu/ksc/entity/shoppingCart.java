@@ -95,7 +95,7 @@ public class shoppingCart {
 			return sum;
 		}
 		
-		public double getTotalQuantity() {//全部產品加起來總數量
+		public int getTotalQuantity() {//全部產品加起來總數量
 			int sum =0;
 			if(cartMap!=null && size()>0) {
 				for(Integer qty:cartMap.values()) {
