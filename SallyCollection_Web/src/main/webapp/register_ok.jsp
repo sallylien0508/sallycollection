@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<title>會員註冊成功</title>
 	<script src="https://kit.fontawesome.com/e3d7510046.js"></script>
-	<meta http-equiv="refresh" content="5; url=./">	
+	<meta http-equiv="refresh" content="5; url=./login.jsp#tab1">	
 </head>
 <style>
 	img{width:100vw;height:100vh}
@@ -24,14 +24,14 @@
 </style>
 <body>
 <img alt="" src="images/loadingimg.gif">
-	<header>
-			<h1>註冊成功</h1>
-			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href='index.jsp'>首頁</a></span>
-	</header>
-	<% Customer member= (Customer)session.getAttribute("member"); 
-	String msg =(String)request.getAttribute("msg");
+	<% //Customer member= (Customer)session.getAttribute("member"); 
+/* 	String msg =(String)request.getAttribute("msg"); */
 	%>
-	
+	<header>
+			<h1>${requestScope.member.getName()} ${requestScope.msg?"尚未":requestScope.msg}成功</h1>
+			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href='login.jsp#tab1'>登入頁面</a></span>
+	</header>
+
 	<article>		
 		<%-- <h2><%= member==null?"尚未登入":member.getName() %><%= msg!=null?msg:"" %>成功</h2> --%>
 	</article>

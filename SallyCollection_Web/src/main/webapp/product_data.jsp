@@ -128,19 +128,44 @@
 			unitPrice.innerHTML=selectedSize.dataset.price;
 			sizeStockSpan.innerHTML = selectedSize.value + ":" + selectedSize.dataset.stock+"個";
 			quantity.max=selectedSize.dataset.stock;
-		}		
+		}	
+		function addCart(){
+			alert("即將加入購物車");
+			 /* e.preventDefault(); */ //無效
+			//送出同步的submit
+			//return true;
+
+			//用ajax送出非同步的post請求
+			$.ajax({
+				url:$("#addCartForm").attr("action")+"?ajax=",
+				method:"POST",
+				data:$("#addCartForm").serialize()
+			}).done(addCartDoneHandler);
+				return false;
+		}
+		function addCartDoneHandler(result,txtStatus,xhr){
+			console.log(result);
+			alert(result.totalQty);
+			$(".cartTotalQty").text(result.totalQty);
+		}
 </script>	
 	</head>
 	<body>
 
 		<article>
-			
+		<div style="color: black; display: flex; align-items: center;float: right;">
+                  <i class="fa-solid fa-cart-shopping" style="font-size:30px; "></i>
+                  <a href="<%= request.getContextPath() %>/member/cart.jsp" style="color:black" class="cartTotalQty">我的訂單
+                   ${sessionScope.cart.getTotalQuantity()}
+             <%--      <%= cart!=null?cart.getTotalQuantity():"" %> --%>
+                  </a>       
+         </div> 
 			<%if(p==null){%>
 			<p>查無此產品(<%= productId %>)</p>
 			<%
 			}else{
 			%>
-<div style="display:flex">			
+<div style="clear: both;display:flex;">			
 		
 			
 			<div class='productData'>
@@ -162,7 +187,7 @@
 					<hr>
 					<span id='sizeStockSpan'style="font-size: 15px;float: right;"></span>
 					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
-					<form method='POST' action='./add_cart.do'>
+					<form id ='addCartForm' method='POST' action='./add_cart.do' onsubmit='return addCart();'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
 					<!-- 顏色 -->

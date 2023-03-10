@@ -76,10 +76,14 @@ public class AddCartServlet extends HttpServlet {
 			errorList.add("productId不得為null，quantity必為正整數");
 		}
 		System.err.println(errorList);
-		//3.外部轉址/member/cart.jsp
-		response.sendRedirect(request.getContextPath()+"/member/cart.jsp");
+		//3. 同步請求 外部轉址 /member/cart.jsp vs 非同步請求 內部轉交 /small_cart_json.jsp
+		String ajax = request.getParameter("ajax");
+		if(ajax==null) {		
+			response.sendRedirect(request.getContextPath()+"/member/cart.jsp");			
+		}else {
+			request.getRequestDispatcher("/small_cart_json.jsp").forward(request, response);			
+		}		
 		return;
-		
 	}
 
 }

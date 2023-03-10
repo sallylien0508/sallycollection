@@ -24,7 +24,7 @@
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
                   <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
-                       ${sessionScope.cart.getTotalQuantity()}
+                      <span class="cartTotalQty">${sessionScope.cart.getTotalQuantity()}</span> 
                   </a>
                 </div>
                 <div class="navitem">
@@ -43,7 +43,7 @@
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
                   <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
-                   ${sessionScope.cart.getTotalQuantity()}
+                     <span class="cartTotalQty">${sessionScope.cart.getTotalQuantity()}</span> 
              <%--      <%= cart!=null?cart.getTotalQuantity():"" %> --%>
                   </a>        
                 </div>
