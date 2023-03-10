@@ -3,4 +3,3 @@
 		<jsp:include page='product_data.jsp' />
 		</div>		
 	</body>
-</html>

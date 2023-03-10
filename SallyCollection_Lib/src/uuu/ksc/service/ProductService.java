@@ -40,13 +40,22 @@ public class ProductService {
 		
 		return dao.selectProductSize(productId, colorName, sizeName);
 	}
-	public List<Product> getHighToLow() throws VGBException{
-		return dao.selectHighToLow();
+	public List<Product> getHighToLow(String gendercategory) throws VGBException{
+		return dao.selectHighToLow(gendercategory);
 	}
-	public List<Product> getLowToHigh() throws VGBException{
-		return dao.selectLowToHigh();
+	public List<Product> getLowToHigh(String gendercategory) throws VGBException{
+		return dao.selectLowToHigh(gendercategory);
 	}
-	public List<Product> getgendercategory(String category,String gendercategory) throws VGBException{
-		return dao.selectgendercategory(category,gendercategory);
+	public List<Product> getgendercategory(String gendercategory) throws VGBException{
+		return dao.selectgendercategory(gendercategory);
+	}
+	public List<Product> categetgendercategory(String category,String gendercategory) throws VGBException{
+		return dao.selectcategetgendercategory(category,gendercategory);
+	}
+	public List<Product> getALLHighToLow() throws VGBException{
+		return dao.selectALLHighToLow();
+	}
+	public List<Product> getALLLowToHigh() throws VGBException{
+		return dao.selectALLLowToHigh();
 	}
 }

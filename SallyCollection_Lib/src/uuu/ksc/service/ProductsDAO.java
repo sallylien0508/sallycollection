@@ -361,15 +361,14 @@ class ProductsDAO{
 			return size;
 		}
 
-			private static final String selectHighToLow =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100 DESC;";
-				List<Product> selectHighToLow() throws VGBException{
+			private static final String selectALLHighToLow =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100 DESC";
+				List<Product> selectALLHighToLow() throws VGBException{
 					 List<Product> list =new ArrayList<>();
 				try (
 						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
-						PreparedStatement pstmt = connection.prepareStatement(selectHighToLow); //3.準備指令
+						PreparedStatement pstmt = connection.prepareStatement(selectALLHighToLow); //3.準備指令
 					){			
 					//3.1 傳入?(0)的值
-					
 					try(
 							ResultSet rs = pstmt.executeQuery(); //4.執行指令
 					){
@@ -390,6 +389,7 @@ class ProductsDAO{
 							p.setPhotoUrl(rs.getString("photo_url"));
 							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
 							p.setCategory(rs.getString("category"));
+							p.setGendercategory(rs.getString("gendercategory"));
 							list.add(p); //不要忘了
 						}				
 					}
@@ -398,15 +398,15 @@ class ProductsDAO{
 				}
 				return list;
 			}		 
-				private static final String selectLowToHigh =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100";
-				List<Product> selectLowToHigh() throws VGBException{
+			private static final String selectHighToLow =  "SELECT * FROM products WHERE gendercategory= ? ORDER BY unit_price * (100-discount) / 100 DESC";
+				List<Product> selectHighToLow(String gendercategory) throws VGBException{
 					 List<Product> list =new ArrayList<>();
 				try (
 						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
-						PreparedStatement pstmt = connection.prepareStatement(selectLowToHigh); //3.準備指令
+						PreparedStatement pstmt = connection.prepareStatement(selectHighToLow); //3.準備指令
 					){			
-					//3.1 傳入?(0)的值
-					
+					//3.1 傳入?(1)的值
+					 pstmt.setString(1, gendercategory);
 					try(
 							ResultSet rs = pstmt.executeQuery(); //4.執行指令
 					){
@@ -427,7 +427,82 @@ class ProductsDAO{
 							p.setPhotoUrl(rs.getString("photo_url"));
 							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
 							p.setCategory(rs.getString("category"));
-							p.setGendercategory("gendercategory");
+							p.setGendercategory(rs.getString("gendercategory"));
+							list.add(p); //不要忘了
+						}				
+					}
+				} catch (SQLException e) {
+					throw new VGBException("[用價格高至低查詢產品]失敗", e);
+				}
+				return list;
+			}		
+				private static final String selectALLLowToHigh =  "SELECT * FROM products ORDER BY unit_price * (100-discount) / 100";
+				List<Product> selectALLLowToHigh() throws VGBException{
+					 List<Product> list =new ArrayList<>();
+				try (
+						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
+						PreparedStatement pstmt = connection.prepareStatement(selectALLLowToHigh); //3.準備指令
+					){			
+					//3.1 傳入?(0)的值
+					try(
+							ResultSet rs = pstmt.executeQuery(); //4.執行指令
+					){
+						//5. 處理rs
+						while(rs.next()) {
+							Product p;
+							int discount = rs.getInt("discount");
+							if(discount>0) {
+								p = new Outlet();
+								((Outlet)p).setDiscount(discount);						
+							}else p = new Product();					
+							
+							p.setId(rs.getInt("id"));
+							p.setName(rs.getString("name"));
+							p.setUnitPrice(rs.getDouble("unit_price"));
+							p.setStock(rs.getInt("stock"));
+							p.setDescription(rs.getString("description"));
+							p.setPhotoUrl(rs.getString("photo_url"));
+							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+							p.setCategory(rs.getString("category"));
+							p.setGendercategory(rs.getString("gendercategory"));
+							list.add(p); //不要忘了
+						}				
+					}
+				} catch (SQLException e) {
+					throw new VGBException("[用價格低質高查詢產品]失敗", e);
+				}
+				return list;
+			}				
+				private static final String selectLowToHigh =  "SELECT * FROM products WHERE gendercategory= ? ORDER BY unit_price * (100-discount) / 100";
+				List<Product> selectLowToHigh(String gendercategory) throws VGBException{
+					 List<Product> list =new ArrayList<>();
+				try (
+						Connection connection = MySQLConnection.getConnection(); //1,2 取得連線 
+						PreparedStatement pstmt = connection.prepareStatement(selectLowToHigh); //3.準備指令
+					){			
+					//3.1 傳入?(1)的值
+					 pstmt.setString(1, gendercategory);
+					try(
+							ResultSet rs = pstmt.executeQuery(); //4.執行指令
+					){
+						//5. 處理rs
+						while(rs.next()) {
+							Product p;
+							int discount = rs.getInt("discount");
+							if(discount>0) {
+								p = new Outlet();
+								((Outlet)p).setDiscount(discount);						
+							}else p = new Product();					
+							
+							p.setId(rs.getInt("id"));
+							p.setName(rs.getString("name"));
+							p.setUnitPrice(rs.getDouble("unit_price"));
+							p.setStock(rs.getInt("stock"));
+							p.setDescription(rs.getString("description"));
+							p.setPhotoUrl(rs.getString("photo_url"));
+							p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+							p.setCategory(rs.getString("category"));
+							p.setGendercategory(rs.getString("gendercategory"));
 							list.add(p); //不要忘了
 						}				
 					}
@@ -436,15 +511,14 @@ class ProductsDAO{
 				}
 				return list;
 			}
-				 private static final String selectgendercategory="SELECT * FROM ksc.products where category Like ? AND gendercategory  LIKE ? ";
-				 	List<Product> selectgendercategory(String category,String gendercategory) throws VGBException{
+				 private static final String selectgendercategory="SELECT * FROM ksc.products where gendercategory  LIKE ? ";
+				 	List<Product> selectgendercategory(String gendercategory) throws VGBException{
 				 			 List<Product> list =new ArrayList<>();
 				 			 try ( Connection connection = MySQLConnection.getConnection();//1,2取得連線
 				 				   PreparedStatement pstmt = connection.prepareStatement(selectgendercategory);//3. 準備指令
 				 					 ){
 				 				 //3.1傳入?(1個)的值
-				 				 pstmt.setString(1, category);
-				 				 pstmt.setString(2, gendercategory);
+				 				 pstmt.setString(1, gendercategory);
 				 				 try(			
 				 				 ResultSet rs = pstmt.executeQuery();//4.執行指令
 				 				 ){
@@ -470,7 +544,53 @@ class ProductsDAO{
 				 						 p.setPhotoUrl(rs.getString("photo_url"));
 				 						 p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
 				 						 p.setCategory(rs.getString("category"));
-				 						 p.setGendercategory("gendercategory");
+				 						 p.setGendercategory(rs.getString("gendercategory"));
+				 						 list.add(p);
+				 						 
+				 					 }
+				 				 }
+
+				 			} catch (SQLException e) {
+				 				throw new VGBException("查詢全部產品失敗",e);
+				 			}
+				 			 
+				 			 return list;
+				 }
+				 private static final String selectcategetgendercategory="SELECT * FROM ksc.products where gendercategory  LIKE ? AND category Like ? ";
+				 	List<Product> selectcategetgendercategory(String gendercategory,String category) throws VGBException{
+				 			 List<Product> list =new ArrayList<>();
+				 			 try ( Connection connection = MySQLConnection.getConnection();//1,2取得連線
+				 				   PreparedStatement pstmt = connection.prepareStatement(selectcategetgendercategory);//3. 準備指令
+				 					 ){
+				 				 //3.1傳入?(1個)的值
+				 				 pstmt.setString(1, gendercategory);
+				 				 pstmt.setString(2, category);
+				 				 try(			
+				 				 ResultSet rs = pstmt.executeQuery();//4.執行指令
+				 				 ){
+				 					 //5. 處理rs
+				 					 while(rs.next()) {
+				 						 Product p;
+				 						 int discount =rs.getInt("discount");
+				 						 if(discount>0) {
+				 							 p = new Outlet();
+				 							 ((Outlet)p).setDiscount(discount);
+//				 							 Outlet outlet = new Outlet();
+//				 							 outlet.setDiscount(discount);
+//				 							 p =outlet;
+				 							 
+				 						 }else {
+				 							 p = new Product();
+				 						 }
+				 						 p.setId(rs.getInt("id"));
+				 						 p.setName(rs.getString("name"));
+				 						 p.setUnitPrice(rs.getDouble("unit_price"));
+				 						 p.setStock(rs.getInt("stock"));
+				 						 p.setDescription(rs.getString("description"));
+				 						 p.setPhotoUrl(rs.getString("photo_url"));
+				 						 p.setLaunchDate(LocalDate.parse(rs.getString("launch_date")));
+				 						 p.setCategory(rs.getString("category"));
+				 						 p.setGendercategory(rs.getString("gendercategory"));
 				 						 list.add(p);
 				 						 
 				 					 }

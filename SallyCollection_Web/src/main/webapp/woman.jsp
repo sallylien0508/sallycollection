@@ -33,12 +33,6 @@
                 }
               };
           }
-			function getByCaegory(category){
-				location.href='?category=' + encodeURI(category); 
-			}
-			function getgendercategory(gendercategory){
-				location.href='?gendercategory=' + encodeURI(gendercategory); 
-			}
           var index = 0;
           function runHandler(){
             //console.log("timeout");
@@ -141,14 +135,14 @@
 				}else{
 				list = service.getProductsByKeyword(keyword);
 				}
-			}else if(category!=null && category.length()>0){
-				list = service.getProductsByCategory(category);
 			}else if (orderBy != null && orderBy.equals("highToLow")) {
-			    list = service.getHighToLow();
+			    list = service.getHighToLow(gendercategory);
 			}else if (orderBy != null && orderBy.equals("lowTohigh")) {
-			    list = service.getLowToHigh();
-			}else if(category !=null && gendercategory!=null){
-			    list = service.getgendercategory(category,gendercategory);
+			    list = service.getLowToHigh(gendercategory);
+			}else if(gendercategory!=null&& category ==null){
+			    list = service.getgendercategory(gendercategory);
+			}else if(gendercategory!=null && category !=null && category.length()>0 ){
+			    list = service.categetgendercategory(gendercategory ,category);
 			}else{
 				list = service.getALLProducts(); 
 			}
@@ -166,15 +160,15 @@
         <div class = "productmenu">
             <ul class="num">
                     <!-- <h2>類別</h2> -->
-                    <li class="productlist"><a href = '?'>所有商品 </a></li>
-                    <li class="productlist"><a href = 'javascript:getgendercategory("女性") && getByCaegory("本日精選")'>本日精選</a></li>
-                    <li class="productlist"><a href = 'javascript:getgendercategory("女性") && getByCaegory("人氣推薦")'>人氣推薦</a></li>
-                    <li class="productlist"><a href = 'javascript:getgendercategory("女性") && getByCaegory("新品上市")'>新品上市</a></li>
+                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性'>所有商品 </a></li>
+                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=本日精選'>本日精選</a></li>
+                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=人氣推薦'>人氣推薦</a></li>
+                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=新品上市'>新品上市</a></li>
             </ul>
         </div>
         <div style="text-align:right;margin-right:3%;margin-bottom:1%;"> 
-          <a href="products_list.jsp?orderBy=highToLow">價格高至低</a>
-          <a href="products_list.jsp?orderBy=lowTohigh">價格低至高</a>
+          <a href="woman.jsp?gendercategory=女性&&orderBy=highToLow">價格高至低</a>
+          <a href="woman.jsp?gendercategory=女性&&orderBy=lowTohigh">價格低至高</a>
         </div>
 
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">
