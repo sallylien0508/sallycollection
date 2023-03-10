@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>sally's collection</title>
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>
@@ -21,11 +21,16 @@
 		});
 </script>
 		<style>
-			#cart {
+		.sidebar{top: 80px;}
+        article{
+        margin:200px auto;
+        }
+        #cart {
 				  font-family: Arial, Helvetica, sans-serif;
 				  border-collapse: collapse;
 				  width: 80%;
 				  margin: auto;
+				  background-color: white;
 				}
 				
 				#cart td, #cart th {
@@ -35,22 +40,22 @@
 				
 				#cart tr:nth-child(even){background-color: #f2f2f2;}
 				
-				#cart tr:hover {background-color: YellowGreen;}
+				#cart tr:hover {background-color: #ddd;}
 				
-				#cart tbody img{width:56px;vertical-align: middle;float:left}
+				#cart tbody img{width:56px;vertical-align: middle;}
 				#cart tbody input.quantity{width:2.5em}
 				
 				#cart caption{
 				  padding-top: 12px;
 				  padding-bottom: 12px;				  
-				  background-color: #04AA6D;
+				  background-color: #462e25;
 				  color: white;
 				}
 				
 				#cart th{
 				  padding-top: 12px;
 				  padding-bottom: 12px;				  
-				  background-color: darkgray;
+				  background-color: #af3c15;
 				  color: white;
 				}
 				
@@ -160,7 +165,6 @@
 					<th>價格</th>
 					<th>數量</th>
 					<th>小計</th>
-					<th>刪除</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -180,7 +184,7 @@
 						<span style='font-size=:smaller'>庫存剩下：<%=cartItem.getStock() %> </span>
 						</td>
 						<td><%= cart.getAmount(cartItem) %></td>
-						<td ><input type ='checkbox' name='delete<%= cartItem.hashCode() %>'></td>
+						
 					</tr>
 					<% }%>												
 				</tbody>

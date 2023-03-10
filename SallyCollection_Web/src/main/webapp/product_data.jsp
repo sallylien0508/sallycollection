@@ -130,7 +130,7 @@
 			quantity.max=selectedSize.dataset.stock;
 		}	
 		function addCart(){
-			alert("即將加入購物車");
+			alert("成功加入！");
 			 /* e.preventDefault(); */ //無效
 			//送出同步的submit
 			//return true;
@@ -145,7 +145,7 @@
 		}
 		function addCartDoneHandler(result,txtStatus,xhr){
 			console.log(result);
-			alert(result.totalQty);
+			//alert(result.totalQty);
 			$(".cartTotalQty").text(result.totalQty);
 		}
 </script>	

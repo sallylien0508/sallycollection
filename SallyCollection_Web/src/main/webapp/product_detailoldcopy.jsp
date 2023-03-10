@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>sally's collection</title>
         <script src="https://kit.fontawesome.com/e3d7510046.js"></script>
-        <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>     
+        <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
 		<style>
 		.addcart{
 			height: 50px;
@@ -110,47 +110,6 @@
 			    display: block;
 			  	margin: 10% auto;
 			}
-			#snackbar {
-        visibility: hidden;
-        min-width: 250px;
-        margin-left: -125px;
-        background-color: rgb(139 42 49);
-        color: #fff;
-        text-align: center;
-        border-radius: 2px;
-        padding: 16px;
-        position: fixed;
-        z-index: 100000;
-        left: 50%;
-        top: 50%; 
-        font-size: 17px;
-    }
-
-    #snackbar.show {
-        visibility: visible;
-        -webkit-animation: fadein 0.5s, fadeout 0.5s  0.8s;
-        animation: fadein 0.5s, fadeout 0.5s  1.8s;
-    }
-
-    @-webkit-keyframes fadein {
-        from {top: 0; opacity: 0;} 
-        to {top: 50%; opacity: 1;}
-    }
-
-    @keyframes fadein {
-        from {top: 0; opacity: 0;}
-        to {top: 50%; opacity: 1;}
-    }
-
-    @-webkit-keyframes fadeout {
-        from {top: 50%; opacity: 1;} 
-        to {top: 0; opacity: 0;}
-    }
-
-    @keyframes fadeout {
-        from {top: 50%; opacity: 1;}
-        to {top: 0; opacity: 0;}
-    }
 		</style>
 		<%
 		String productId=request.getParameter("productId");
@@ -236,38 +195,7 @@ $(document).ready(function(){
 			unitPrice.innerHTML=selectedSize.dataset.price;
 			sizeStockSpan.innerHTML = selectedSize.value + ":" + selectedSize.dataset.stock+"個";
 			quantity.max=selectedSize.dataset.stock;
-		}	
-		function addCart(e){						
-			//e.preventDefault(); //無效
-			
-			//送出同步的submit
-			//return true;				
-			
-			//用ajax送出非同步的POST請求
-			$.ajax({
-				url: $("#addCartForm").attr("action")+"?ajax=",
-				method: "POST",
-				data: $("#addCartForm").serialize()
-			}).done(addCartDoneHandler);
-			
-			return false;
-		}
-		
-		function addCartDoneHandler(result, txtStatus, xhr){
-			//console.log(result); //for test
-			//alert("加入購物車成功: 目前有" + result.totalQty + "個");
-			toastMessage("加入購物車成功! 目前有" + result.totalQty + "個");
-			$(".cartTotalQty").text(result.totalQty);
-		}
-
-	    function toastMessage(msg) {
-	        var x = document.getElementById("snackbar");
-	        x.innerHTML = msg;
-	        x.className = "show";
-	        setTimeout(function () {
-	            x.className = x.className.replace("show", "");
-	        }, 2300); //此根據css show方法fadeout所需時間相加
-	    } 
+		}		
 </script>
 	</head>
 	<body>
@@ -336,7 +264,7 @@ $(document).ready(function(){
 					<hr>
 					<span id='sizeStockSpan'style="font-size: 15px;float: right;"></span>
 					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
-					<form method='POST' action='./add_cart.do' onsubmit="return addCart()" id='addCartForm'>
+					<form method='POST' action='./add_cart.do'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
 					<!-- 顏色 -->
@@ -370,13 +298,12 @@ $(document).ready(function(){
 					<div class='productDescription'>					
 					<%= p.getDescription() %>
 				</div>
-					<input type='submit' class="addcart" value="加入購物車" >
+					<input type='submit' class="addcart" value="加入購物車">
 					</form>
 				</div>
 </div>					
 			</div>
 				<%}%>
-				<div id="snackbar"></div>
 		</article> 
 
         <%@ include file="/subviews/footer.jsp" %>
