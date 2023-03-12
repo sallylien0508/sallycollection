@@ -14,6 +14,15 @@
         #captchaImage{cursor:pointer;}
         .tab_content{
         width:70%}
+        .loginpostition_child{
+		    width:35%;
+		}
+        .loginpostition_child2{
+		    width: 35%;
+		    float: right;
+		    margin-right: 10%;
+		    margin-top: 0;
+		} 
         </style> 
            <% Customer member= (Customer)session.getAttribute("member"); %>
 	</head>
@@ -59,6 +68,15 @@
 						<input autocomplete="on" id='password2' name='password2' type='password' disabled placeholder="請再輸入密碼(注意大小寫)">
 					</p>
 				</fieldset>
+
+                              
+                            </div>
+                            <div class="loginpostition_child2">
+ <!--                                <div class="loginpostition_txt">
+                                    <label for="photo" class="">頭像:&nbsp;&nbsp; </label>
+                                    <input type="file" name="photo" id="photo">
+                                </div> -->
+                                
                               <div class="txt_field">
                                 <input type="text" required name="name">
                                 <span></span>
@@ -69,13 +87,6 @@
                                 <span></span>
                                 <label for="p">手機</label>
                               </div>
-                              
-                            </div>
-                            <div class="loginpostition_child2">
-                                <div class="loginpostition_txt">
-                                    <label for="photo" class="">頭像:&nbsp;&nbsp; </label>
-                                    <input type="file" name="photo" id="photo">
-                                </div>
                                 <div class="loginpostition_txt">
                                     <label for="birthday" class="">生日:&nbsp;&nbsp;</label>
                                     <input type="date" name="birthday" id="birthday" class="" max="2023-02-02">

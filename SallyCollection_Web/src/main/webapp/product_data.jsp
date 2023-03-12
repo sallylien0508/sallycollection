@@ -78,7 +78,47 @@
 	        [type=radio]:checked + img {
 	        outline: 2px solid #f00;
 	        }
-	        
+	        	#snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: rgb(139 42 49);
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 100000;
+        left: 50%;
+        top: 50%; 
+        font-size: 17px;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s  0.8s;
+        animation: fadein 0.5s, fadeout 0.5s  1.8s;
+    }
+
+    @-webkit-keyframes fadein {
+        from {top: 0; opacity: 0;} 
+        to {top: 50%; opacity: 1;}
+    }
+
+    @keyframes fadein {
+        from {top: 0; opacity: 0;}
+        to {top: 50%; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+        from {top: 50%; opacity: 1;} 
+        to {top: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+        from {top: 50%; opacity: 1;}
+        to {top: 0; opacity: 0;}
+    }
 		</style>
 		<%
 		String productId=request.getParameter("productId");
@@ -130,24 +170,36 @@
 			quantity.max=selectedSize.dataset.stock;
 		}	
 		function addCart(){
-			alert("成功加入！");
+			//alert("成功加入！");
 			 /* e.preventDefault(); */ //無效
 			//送出同步的submit
 			//return true;
 
-			//用ajax送出非同步的post請求
+			//用ajax送出非同步的POST請求
 			$.ajax({
-				url:$("#addCartForm").attr("action")+"?ajax=",
-				method:"POST",
-				data:$("#addCartForm").serialize()
+				url: $("#addCartForm").attr("action")+"?ajax=",
+				method: "POST",
+				data: $("#addCartForm").serialize()
 			}).done(addCartDoneHandler);
-				return false;
+
+			return false;
 		}
-		function addCartDoneHandler(result,txtStatus,xhr){
-			console.log(result);
-			//alert(result.totalQty);
+		
+		function addCartDoneHandler(result, txtStatus, xhr){
+			//console.log(result); //for test
+			//alert("加入購物車成功: 目前有" + result.totalQty + "個");
+			toastMessage("加入購物車成功! 目前有" + result.totalQty + "個");
 			$(".cartTotalQty").text(result.totalQty);
 		}
+
+	    function toastMessage(msg) {
+	        var x = document.getElementById("snackbar");
+	        x.innerHTML = msg;
+	        x.className = "show";
+	        setTimeout(function () {
+	            x.className = x.className.replace("show", "");
+	        }, 2300); //此根據css show方法fadeout所需時間相加
+	    } 
 </script>	
 	</head>
 	<body>
@@ -187,7 +239,7 @@
 					<hr>
 					<span id='sizeStockSpan'style="font-size: 15px;float: right;"></span>
 					<span style="font-size: 15px;float: right;">庫存：<%= p.getStock()%><span id='stockSpan'></span></span>
-					<form id ='addCartForm' method='POST' action='./add_cart.do' onsubmit='return addCart();'>
+					<form id ='addCartForm' method='POST' action='./add_cart.do' onsubmit='return addCart()' id='addCartForm'>
 					<input type='hidden' name='productId' value='<%= productId %>' max='3' min='0' required><!-- 加入購物車要指定產品代號 -->
 					<%if(p.getcolorCount()>0){ %>
 					<!-- 顏色 -->
@@ -227,6 +279,7 @@
 </div>					
 			</div>
 				<%}%>
+				<div id="snackbar"></div>
 		</article> 
 	</body>
 </html>

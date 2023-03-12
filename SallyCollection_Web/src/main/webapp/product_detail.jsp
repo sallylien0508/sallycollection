@@ -372,6 +372,7 @@ $(document).ready(function(){
 				</div>
 					<input type='submit' class="addcart" value="加入購物車" >
 					</form>
+					<a href="<%= request.getContextPath() %>/member/cart.jsp" style ="color: #153262;float: right;">view cart >></a>
 				</div>
 </div>					
 			</div>

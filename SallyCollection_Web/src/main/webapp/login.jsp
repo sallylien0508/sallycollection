@@ -163,10 +163,10 @@
                               
                             </div>
                             <div class="loginpostition_child2">
-                                <div class="loginpostition_txt">
+<!--                                 <div class="loginpostition_txt">
                                     <label for="photo" class="">頭像:&nbsp;&nbsp; </label>
                                     <input type="file" name="photo" id="photo">
-                                </div>
+                                </div> -->
                                 <div class="loginpostition_txt">
                                     <label for="birthday" class="">生日:&nbsp;&nbsp;</label>
                                     <input type="date" name="birthday" id="birthday" class="" max="2023-02-02">
