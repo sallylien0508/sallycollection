@@ -51,12 +51,14 @@ td{width: 20%;}
 		<div>
 		    <p>原價</p>
 	    	<p>活動折扣</p>
+	    	<p>手續費</p>
 	    	<p>運費</p>
 	    	<p>應繳總金額</p>
 		</div>
 	    <div>
 		    <p>1780元</p>
 	    	<p>9折 178元</p>
+	    	<p>10元</p>
 	    	<p>20</p>
 	    	<p>1622元</p>
 		</div>
@@ -86,6 +88,20 @@ td{width: 20%;}
 	</tr>
 </tbody>
 </table>
+	<fieldset style='width:95%'>
+								<legend>收件人資料(<a href='javascript:copyMember()'>複製訂購人</a>):</legend>
+								<label>姓名:</label><input name='name' placeholder="請輸入收件人姓名" required><br>
+								<label>email:</label><input name='email' placeholder="請輸入收件人Email" required><br>
+								<label>電話:</label><input name='phone' placeholder="請輸入收件人電話" required><br>
+								<label>取件地址:</label><input name='shippingAddr' placeholder="請輸入宅配地址" required><br>
+								<input type='button' id='chooseStoreButton' value='選擇超商' style='display:none'>
+								<datalist id="shopList">
+									  <option value='台北旗艦店 復興北路99號1F'>台北旗艦店 復興北路99號1F</option>
+									  <option value="新竹門市">新竹門市 新竹市東區光復路二段295號3樓之2</option>
+									  <option value="台中門市">台中門市 台中市西區臺灣大道二段309號2樓</option>
+									  <option value="高雄門市">高雄門市 高雄市前鎮區中山二路2號25樓</option>						  
+								</datalist>
+	</fieldset>
 <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

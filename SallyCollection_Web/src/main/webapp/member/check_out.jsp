@@ -1,3 +1,5 @@
+<%@page import="uuu.ksc.entity.ShippingType"%>
+<%@page import="uuu.ksc.entity.PaymentType"%>
 <%@page import="uuu.ksc.entity.Customer"%>
 <%@page import="uuu.ksc.entity.CartItem"%>
 <%@page import="uuu.ksc.entity.shoppingCart"%>
@@ -155,7 +157,7 @@
 <% if(cart ==null || cart.isEmpty()){ %>
 <p>購物車是空的!</p>
 <%}else{  %>
-<form action='update_cart.do' method ='POST'><!-- http://localhost:8080/ksc/member/update_cart.do -->
+<form action='check_out_ok.jsp' method ='POST'><!-- http://localhost:8080/ksc/member/check_out.do -->
 			<table id='cart'>
 				<caption>購物明細</caption>
 				<thead>
@@ -206,20 +208,23 @@
 							<label>付款方式:</label>
 							<select name='paymentType' required onchange='paymentChanged()'>
 								<option value=''>請選擇...</option>
-								<option value='SHOP' >門市付款</option>
+								<% for(PaymentType pType: PaymentType.values()) {%>
+								<option value='<%= pType.name() %>'data-fee='<%= pType.getFee() %>'><%= pType %></option>
+								<%} %> 
+								<!-- <option value='SHOP' >門市付款</option>
 								<option value='ATM'>ATM轉帳</option>
 								<option value='HOME' data-fee='50'>貨到付款, 50元</option>
 								<option value='STORE' data-fee='65'>超商付款,65元</option>
-								<option value='CARD'>信用卡</option>
+								<option value='CARD'>信用卡</option> -->
 							</select>
 						</span>
 						<span style='float:left'>
 						<label>貨運方式:</label>
 							<select name='shippingType' required onchange='shippingChanged()'>
-								<option value=''>請選擇...</option>
-								<option value='SHOP'>門市取貨</option>								
-								<option value='HOME' data-fee='100'>宅配到府, 100元</option>
-								<option value='STORE'>超商取貨</option>								
+							<option value=''>請選擇...</option>
+								<% for(ShippingType sType: ShippingType.values()) {%>
+								<option value='<%= sType.name() %>' data-fee='<%= sType.getFee() %>'><%= sType %></option>
+								<%} %> 
 							</select>
 						</span>
 						</td>
