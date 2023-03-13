@@ -79,7 +79,7 @@
 				</thead>
 				<tbody>	
 					<tr>
-						<td>Ap123456789</td>
+						<td><a href="<%= request.getContextPath() %>/member/check_out_ok.jsp" style="color:blue">Ap123456789</a></td>
 						<td>2023-03-01</td>
 						<td>線上刷卡</td>
 						<td>已出貨</td>

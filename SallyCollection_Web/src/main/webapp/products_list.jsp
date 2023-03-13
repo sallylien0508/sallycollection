@@ -14,11 +14,11 @@
         <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
         <script src='./fancybox3/jquery.fancybox.js'></script>
         <script>
-          var imageAr = ["css3dimg3.jpg","css3dimg6.jpg","css3dimg3.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg6.jpg"]
+        var imageAr = ["css3dimg3.jpg","css3dimg2.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg3.jpg","css3dimg2.jpg"]
           $(document).ready(init);
           function init(){
             //setTimeout(runHandler,1000);
-            setInterval(runHandler,1000);
+            setInterval(runHandler,5000);
             $("#memberName").click(function(){
         		   /*  $(".sidebar").toggle(); */
         		  $(".sidebar").slideToggle();

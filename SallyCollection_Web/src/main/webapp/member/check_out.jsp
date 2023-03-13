@@ -128,13 +128,13 @@
 			}
 			
 			function copyMember(){
-				$("input[name='name']").val("張三");
-				$("input[name='email']").val("test02@uuu.com.tw");
-				$("input[name='phone']").val("0987654321");				
+				$("input[name='name']").val("${sessionScope.member.name}");
+				$("input[name='email']").val("${sessionScope.member.email}");
+				$("input[name='phone']").val("${sessionScope.member.phone}");				
 				
 				var selectedShippingOption = $("select[name='shippingType'] option:selected");
 				if(selectedShippingOption.val()=='HOME'){
-					$("input[name='shippingAddr']").val("台北市復興北路101號3樓");
+					$("input[name='shippingAddr']").val("${sessionScope.member.address}");
 				}
 			}
 		</script>

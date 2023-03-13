@@ -28,8 +28,8 @@ td{width: 20%;}
 
    <jsp:include page="/subviews/header.jsp" />  
    <jsp:include page="/subviews/nav.jsp" />
-       
-    <p style="margin-top: 150px;text-align: center;">
+<div style="background-color:white;width: 80%; margin: 0 auto;border-radius: 4%;">
+    <p style="margin-top: 150px;text-align: center;font-size: 30px;color: #0b0b53;">
     訂單資料
     </p>
     <div style="display: flex;justify-content: space-evenly;">
@@ -64,7 +64,7 @@ td{width: 20%;}
 		</div>
     </div>
     <hr>
-    <p style="margin-top: 150px;text-align: center;">
+    <p style="text-align: center;font-size: 30px;color: #0b0b53;">
     訂單明細
     </p>
 <table style="width: 80%;text-align: center;margin: 0 auto;">
@@ -88,20 +88,7 @@ td{width: 20%;}
 	</tr>
 </tbody>
 </table>
-	<fieldset style='width:95%'>
-								<legend>收件人資料(<a href='javascript:copyMember()'>複製訂購人</a>):</legend>
-								<label>姓名:</label><input name='name' placeholder="請輸入收件人姓名" required><br>
-								<label>email:</label><input name='email' placeholder="請輸入收件人Email" required><br>
-								<label>電話:</label><input name='phone' placeholder="請輸入收件人電話" required><br>
-								<label>取件地址:</label><input name='shippingAddr' placeholder="請輸入宅配地址" required><br>
-								<input type='button' id='chooseStoreButton' value='選擇超商' style='display:none'>
-								<datalist id="shopList">
-									  <option value='台北旗艦店 復興北路99號1F'>台北旗艦店 復興北路99號1F</option>
-									  <option value="新竹門市">新竹門市 新竹市東區光復路二段295號3樓之2</option>
-									  <option value="台中門市">台中門市 台中市西區臺灣大道二段309號2樓</option>
-									  <option value="高雄門市">高雄門市 高雄市前鎮區中山二路2號25樓</option>						  
-								</datalist>
-	</fieldset>
+</div>
 <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

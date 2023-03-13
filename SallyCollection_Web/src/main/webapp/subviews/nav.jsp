@@ -23,7 +23,7 @@
                 <div class="navitem">
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
-                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
+                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">購物車
                       <span class="cartTotalQty">${sessionScope.cart.getTotalQuantity()}</span> 
                   </a>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="navitem">
                   <div class="navitem__icon"></div>
                   <i class="fa-solid fa-cart-shopping" style="font-size:30px; color: wheat;"></i>
-                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">我的訂單
+                  <a class=navitem__text href="<%= request.getContextPath() %>/member/cart.jsp">購物車
                      <span class="cartTotalQty">${sessionScope.cart.getTotalQuantity()}</span> 
              <%--      <%= cart!=null?cart.getTotalQuantity():"" %> --%>
                   </a>        
@@ -54,6 +54,8 @@
               </div>
                    <ul class="sidebar">
                       <li><a href="<%= request.getContextPath() %>/member/update.jsp" >修改會員</a></li>
+                      <hr>
+                      <li><a href="<%= request.getContextPath() %>/member/historyorder.jsp" >歷史訂單</a></li>
                       <hr>
                       <li><a href="<%= request.getContextPath() %>/logout.do" >登出</a></li>
                     </ul>

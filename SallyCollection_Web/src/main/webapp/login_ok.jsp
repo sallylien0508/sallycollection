@@ -8,8 +8,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
 	<title>會員註冊成功</title>
+				<%
+			String backurl = (String)session.getAttribute("backurl");
+			%>
 	<script src="https://kit.fontawesome.com/e3d7510046.js"></script>
-	<meta http-equiv="refresh" content="5; url=./">	
+	<meta http-equiv="refresh" content="5; url=<%= backurl!=null?backurl:"index.jsp" %>">	
 </head>
 <style>
 	img{width:100vw;height:100vh}
@@ -26,7 +29,7 @@
 	<img alt="" src="images/loadingimg.gif">
 	<header>
 			<h1>登入成功</h1>
-			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href='index.jsp'>首頁</a></span>
+			<span style="position: absolute;top: 2.5em;left: 55%;">5秒後將自動跳轉<a href="<%= backurl!=null?backurl:"index.jsp"%>">首頁</a></span>
 	</header>
 	<% Customer member= (Customer)session.getAttribute("member"); 
 	String msg =(String)request.getAttribute("msg");

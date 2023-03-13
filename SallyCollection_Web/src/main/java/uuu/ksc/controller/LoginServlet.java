@@ -72,11 +72,12 @@ public class LoginServlet extends HttpServlet {
 			Customer c = service.login(id,password);
 			
 			//3.1 登入成功：內部轉交（forward）/login_ok.jsp
+			String backurl = (String) session.getAttribute("backurl");
 			RequestDispatcher dispatcher =request.getRequestDispatcher("login_ok.jsp");
 			session.setAttribute("member",c);
 			request.setAttribute("msg","登入");
+			session.setAttribute("backurl",backurl);
 			dispatcher.forward(request,response);
-			
             return;
     	}catch (LoginFailedException e) {	
     		//this.log(e.getMessage());

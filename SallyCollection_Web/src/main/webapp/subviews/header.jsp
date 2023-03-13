@@ -8,7 +8,7 @@
             <li><a href="<%= request.getContextPath() %>">首頁</a></li>
             <li><a href="<%= request.getContextPath() %>/products_list.jsp">全部商品</a></li>
             <li><a href="<%= request.getContextPath() %>/woman.jsp?gendercategory=女性">女性專區</a></li>
-            <li><a href="<%= request.getContextPath() %>/woman.html">男性專區</a></li>
+            <li><a href="<%= request.getContextPath() %>/men.jsp?gendercategory=男性"">男性專區</a></li>
             <li class="lastLi"><a href="<%= request.getContextPath() %>/child.jsp?gendercategory=小孩">孩童專區</a></li>
             </ul>
         </div>

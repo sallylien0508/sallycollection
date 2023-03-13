@@ -39,13 +39,26 @@ public class LoginCheckFilter extends HttpFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
+//	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+//		HttpSession session = request.getSession();
+//		Customer member = (Customer )session.getAttribute("member");
+//		if(member!=null) {
+//			chain.doFilter(request, response);
+//		}else {
+//			System.out.println(request.getRequestURI());//TODO: 登入成功要回這個網址
+//			response.sendRedirect(request.getContextPath() + "/login.jsp#tab1");			
+//		}
+//	}
+	
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		Customer member = (Customer )session.getAttribute("member");
 		if(member!=null) {
 			chain.doFilter(request, response);
 		}else {
-			System.out.println(request.getRequestURI());//TODO: 登入成功要回這個網址
+			String backurl = request.getRequestURI();
+			session.setAttribute("backurl",backurl);
+			System.out.println(backurl);
 			response.sendRedirect(request.getContextPath() + "/login.jsp#tab1");			
 		}
 	}

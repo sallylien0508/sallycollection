@@ -14,7 +14,7 @@
         <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
         <script src='./fancybox3/jquery.fancybox.js'></script>
         <script>
-        var imageAr = ["css3dimg3.jpg","css3dimg2.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg3.jpg","css3dimg2.jpg"]
+          var imageAr = ["css3dimg3.jpg","css3dimg2.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg3.jpg","css3dimg2.jpg"]
           $(document).ready(init);
           function init(){
             //setTimeout(runHandler,1000);
@@ -160,15 +160,15 @@
         <div class = "productmenu">
             <ul class="num">
                     <!-- <h2>類別</h2> -->
-                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性'>所有商品 </a></li>
-                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=本日精選'>本日精選</a></li>
-                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=人氣推薦'>人氣推薦</a></li>
-                    <li class="productlist"><a href = 'woman.jsp?gendercategory=女性&&category=新品上市'>新品上市</a></li>
+                    <li class="productlist"><a href = 'men.jsp?gendercategory=男性'>所有商品 </a></li>
+                    <li class="productlist"><a href = 'men.jsp?gendercategory=男性&&category=本日精選'>本日精選</a></li>
+                    <li class="productlist"><a href = 'men.jsp?gendercategory=男性&&category=人氣推薦'>人氣推薦</a></li>
+                    <li class="productlist"><a href = 'men.jsp?gendercategory=男性&&category=新品上市'>新品上市</a></li>
             </ul>
         </div>
         <div style="text-align:right;margin-right:3%;margin-bottom:1%;"> 
-          <a href="woman.jsp?gendercategory=女性&&orderBy=highToLow">價格高至低</a>
-          <a href="woman.jsp?gendercategory=女性&&orderBy=lowTohigh">價格低至高</a>
+          <a href="men.jsp?gendercategory=男性&&orderBy=highToLow">價格高至低</a>
+          <a href="men.jsp?gendercategory=男性&&orderBy=lowTohigh">價格低至高</a>
         </div>
 
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">
