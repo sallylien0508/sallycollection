@@ -2,6 +2,8 @@ package uuu.ksc.test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import uuu.ksc.entity.Customer;
 import uuu.ksc.entity.Order;
@@ -13,6 +15,7 @@ import uuu.ksc.entity.Size;
 import uuu.ksc.exception.VGBException;
 import uuu.ksc.exception.VGBInvalidDataException;
 import uuu.ksc.service.CustomerService;
+import uuu.ksc.service.OrderService;
 import uuu.ksc.service.ProductService;
 
 public class TestOrder {
@@ -26,7 +29,7 @@ public class TestOrder {
 			cart.setMember(member);
 			
 			{ //"2", "白", "M"
-				String productId = "2"; //request.getParameter("productId")
+				String productId = "20"; //request.getParameter("productId")
 				String colorName = "白色"; //request.getParameter("color")
 				String sizeName = "M"; //request.getParameter("sizeName")				
 				
@@ -66,10 +69,12 @@ public class TestOrder {
 			
 			order.add(cart);
 			
+			OrderService oService = new OrderService();
+			oService.checkOut(order);
 			System.out.println(order);
 			
 		} catch (VGBException e) {
-			System.out.println(e.getMessage());
+			Logger.getLogger("建立訂單測試").log(Level.SEVERE,e.getMessage(),e);
 		} 
 
 	}

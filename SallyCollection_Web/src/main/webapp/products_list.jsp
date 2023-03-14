@@ -14,7 +14,7 @@
         <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
         <script src='./fancybox3/jquery.fancybox.js'></script>
         <script>
-        var imageAr = ["css3dimg3.jpg","css3dimg2.jpg","css3dimg4.jpg","css3dimg5.jpg","css3dimg3.jpg","css3dimg2.jpg"]
+        var imageAr = ["css3dimg5.jpg","css3dimg4.jpg","css3dimg3.jpg","css3dimg2.jpg","css3dimg5.jpg","css3dimg4.jpg"]
           $(document).ready(init);
           function init(){
             //setTimeout(runHandler,1000);
@@ -156,7 +156,7 @@
 		%>		
        
        
-        <img id="myImg" src="images/css3dimg3.jpg">
+        <img id="myImg" src="images/css3dimg5.jpg">
         <div class = "productmenu">
             <ul class="num">
                     <!-- <h2>類別</h2> -->
@@ -167,8 +167,8 @@
             </ul>
         </div>
         <div style="text-align:right;margin-right:3%;margin-bottom:1%;"> 
-          <a href="products_list.jsp?orderBy=highToLow">價格高至低</a>
-          <a href="products_list.jsp?orderBy=lowTohigh">價格低至高</a>
+          <a href="products_list.jsp?orderBy=highToLow">價格高至低</a><i class="fa-solid fa-up-long" style="color:white"></i>
+          <a href="products_list.jsp?orderBy=lowTohigh">價格低至高</a><i class="fa-solid fa-down-long" style="color:white"></i>
         </div>
 
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">

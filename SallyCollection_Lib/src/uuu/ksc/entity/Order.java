@@ -75,7 +75,8 @@ public class Order {
 			
 			orderItem.setProduct(cartItem.getProduct());
 			orderItem.setColor(cartItem.getColor());
-			orderItem.setSize(cartItem.getSizeName());
+			if(cartItem.getSize()!=null)
+			orderItem.setSize(cartItem.getSize().getSizeName());
 			
 			orderItem.setPrice(cart.getUnitPrice(cartItem));
 			orderItem.setQuantity(cart.getQuantity(cartItem));

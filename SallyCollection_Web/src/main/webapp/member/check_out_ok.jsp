@@ -20,6 +20,42 @@
 </script>
 <style>
 td{width: 20%;}
+.shipping-progress {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 2%;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.active .circle {
+  background-color: blue;
+}
+
+.label {
+  text-align: center;
+  font-size: 14px;
+}
+
 </style>
 	</head>
 
@@ -28,8 +64,27 @@ td{width: 20%;}
 
    <jsp:include page="/subviews/header.jsp" />  
    <jsp:include page="/subviews/nav.jsp" />
-<div style="background-color:white;width: 80%; margin: 0 auto;border-radius: 4%;">
-    <p style="margin-top: 150px;text-align: center;font-size: 30px;color: #0b0b53;">
+<div style="background-color:white;width: 80%; margin: 150px auto;">
+	 <div class="shipping-progress">
+	  		<div class="step active">
+	    	<div class="circle">1</div>
+	    	<div class="label">下單</div>
+			</div>
+		  <div class="step active">
+		    <div class="circle">2</div>
+		    <div class="label">出貨</div>
+		  </div>
+		  <div class="step">
+		    <div class="circle">3</div>
+		    <div class="label">運送</div>
+		  </div>
+		  <div class="step">
+		    <div class="circle">4</div>
+		    <div class="label">抵達</div>
+		  </div>
+		</div>
+	<hr>
+    <p style="text-align: center;font-size: 30px;color: #0b0b53;">
     訂單資料
     </p>
     <div style="display: flex;justify-content: space-evenly;">
@@ -88,6 +143,7 @@ td{width: 20%;}
 	</tr>
 </tbody>
 </table>
+
 </div>
 <%@ include file="/subviews/footer.jsp" %>
 </body>

@@ -167,8 +167,8 @@
             </ul>
         </div>
         <div style="text-align:right;margin-right:3%;margin-bottom:1%;"> 
-          <a href="child.jsp?gendercategory=小孩&&orderBy=highToLow">價格高至低</a>
-          <a href="child.jsp?gendercategory=小孩&&orderBy=lowTohigh">價格低至高</a>
+          <a href="child.jsp?gendercategory=小孩&&orderBy=highToLow">價格高至低</a><i class="fa-solid fa-up-long" style="color:white"></i>
+          <a href="child.jsp?gendercategory=小孩&&orderBy=lowTohigh">價格低至高</a><i class="fa-solid fa-down-long" style="color:white"></i>
         </div>
 
          <form id='searchForm' action='' method='GET' style="text-align:right;margin-right:3%;">
