@@ -5,8 +5,10 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import uuu.ksc.entity.CartItem;
 import uuu.ksc.entity.Customer;
 import uuu.ksc.entity.Order;
+import uuu.ksc.entity.OrderItem;
 import uuu.ksc.entity.PaymentType;
 import uuu.ksc.entity.Product;
 import uuu.ksc.entity.ShippingType;
@@ -72,6 +74,9 @@ public class TestOrder {
 			OrderService oService = new OrderService();
 			oService.checkOut(order);
 			System.out.println(order);
+			
+
+			
 			
 		} catch (VGBException e) {
 			Logger.getLogger("建立訂單測試").log(Level.SEVERE,e.getMessage(),e);
