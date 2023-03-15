@@ -5,10 +5,9 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import uuu.ksc.entity.CartItem;
+
 import uuu.ksc.entity.Customer;
 import uuu.ksc.entity.Order;
-import uuu.ksc.entity.OrderItem;
 import uuu.ksc.entity.PaymentType;
 import uuu.ksc.entity.Product;
 import uuu.ksc.entity.ShippingType;

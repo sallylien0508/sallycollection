@@ -1,6 +1,5 @@
 package uuu.ksc.entity;
 
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -78,9 +77,10 @@ public class Order {
 			orderItem.setColor(cartItem.getColor());
 			if(cartItem.getSize()!=null)
 			orderItem.setSize(cartItem.getSize().getSizeName());
+			
 			orderItem.setPrice(cart.getUnitPrice(cartItem));
 			orderItem.setQuantity(cart.getQuantity(cartItem));
-		
+			
 			orderItemSet.add(orderItem);//將明細加入這個清單orderItemSet）
 		}
 	}
