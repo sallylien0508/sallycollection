@@ -53,12 +53,18 @@ public class Order {
 		}
 		return sum;
 	}
+	private double totalAmount;
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 	public double getTotalAmount() {
-		double sum =0;
+		double sum = 0;
 		if(orderItemSet!=null && orderItemSet.size()>0) {
 			for(OrderItem item:orderItemSet) {
-				sum+=item.getPrice()*item.getQuantity();
-			}
+				sum+= item.getPrice() * item.getQuantity();
+			}			
+		}else {
+			sum = this.totalAmount;
 		}
 		return sum;
 	}
@@ -174,6 +180,16 @@ public class Order {
 	}
 	public void setRecipientPhone(String recipientPhone) {
 		this.recipientPhone = recipientPhone;
+	}
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", customer=" + customer + ", orderDate=" + orderDate + ", orderTime=" + orderTime
+				+ ", status=" + status + ", paymentType=" + paymentType + ", paymentFee=" + paymentFee
+				+ ", paymentNote=" + paymentNote + ", shippingType=" + shippingType + ", shippingFee=" + shippingFee
+				+ ", shippingNote=" + shippingNote + ", shippingAddress=" + shippingAddress + ", recipientName="
+				+ recipientName + ", recipientEmail=" + recipientEmail + ", recipientPhone=" + recipientPhone
+				+ ", orderItemSet=" + orderItemSet + ", size()=" + size() + ", getTotalQuantity()=" + getTotalQuantity()
+				+ ", getTotalAmount()=" + getTotalAmount() + "]";
 	}
 	
 	

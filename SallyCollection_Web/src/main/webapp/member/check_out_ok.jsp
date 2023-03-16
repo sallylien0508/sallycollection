@@ -65,6 +65,7 @@ td{width: 20%;}
    <jsp:include page="/subviews/header.jsp" />  
    <jsp:include page="/subviews/nav.jsp" />
 <div style="background-color:white;width: 80%; margin: 150px auto;">
+	<div>${requestScope.theOrder}</div>		
 	 <div class="shipping-progress">
 	  		<div class="step active">
 	    	<div class="circle">1</div>

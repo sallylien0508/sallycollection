@@ -92,7 +92,10 @@
 					</tr>
 				</thead>
 				<tbody>	
-					<% for(CartItem cartItem:cart.getCartItemSet()){%>
+					<% /* ProductService pservice = new ProductService(); */
+					for(CartItem cartItem:cart.getCartItemSet()){
+					/* int stock=pService.getStock(cartItem); */
+					%>
 					<tr>				
 						<td>
 							<img src='<%= request.getContextPath() %>/<%= cartItem.getPhotourl() %>'>
