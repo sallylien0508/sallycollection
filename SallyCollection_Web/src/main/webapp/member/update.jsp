@@ -61,7 +61,7 @@
 					
 						<label for="password">原密碼:</label>
 					 	<input type="password" required title="輸入密碼才以修改功能" type="password" disabled name="password"id='password' >
-					 	<input type='checkbox' id='showPwdBox'><label>顯示密碼</label>
+					 	<input type='checkbox' id='showPwdBox'><label>顯示密碼</label><br>
 						<label>新密碼: </label>
 						<input autocomplete="on" id='password1' name='password1' type='password' disabled placeholder="請輸入密碼(注意大小寫)">
 						<br><label>確認新密碼: </label>
