@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="uuu.ksc.entity.Order"%>
+<%@page import="uuu.ksc.entity.OrderItem"%>
+<%@page import="uuu.ksc.service.OrderService"%>
 <%@page import="uuu.ksc.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -65,7 +69,8 @@ td{width: 20%;}
    <jsp:include page="/subviews/header.jsp" />  
    <jsp:include page="/subviews/nav.jsp" />
 <div style="background-color:white;width: 80%; margin: 150px auto;">
-	<div>${requestScope.theOrder}</div>		
+<%-- 	<div>${requestScope.theOrder}</div>		 --%>
+
 	 <div class="shipping-progress">
 	  		<div class="step active">
 	    	<div class="circle">1</div>
@@ -97,6 +102,15 @@ td{width: 20%;}
     		<p>出貨狀態</p>
     		
     	</div>
+    	<%
+			Order order = (Order)request.getAttribute("theOrder");
+			String orderId;
+			if(order!=null){
+				orderId = String.valueOf(order.getId());
+			}else{
+				orderId = request.getParameter("orderId");
+			}
+		%>
     	<div>
     		<p>2023-02-03</p>
 	    	<p>AP12345678</p>
@@ -116,7 +130,7 @@ td{width: 20%;}
 	    	<p>9折 178元</p>
 	    	<p>10元</p>
 	    	<p>20</p>
-	    	<p>1622元</p>
+	    	<p></p>
 		</div>
     </div>
     <hr>

@@ -92,7 +92,7 @@ public class shoppingCart {
 					sum+=getAmount(item);
 					}
 			}
-			return sum;
+			return  Math.round(sum);
 		}
 		
 		public int getTotalQuantity() {//全部產品加起來總數量

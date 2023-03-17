@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import uuu.ksc.entity.Color;
 import uuu.ksc.entity.Order;
 import uuu.ksc.entity.OrderItem;
+import uuu.ksc.entity.Product;
 import uuu.ksc.exception.KSCStockShortageException;
 import uuu.ksc.exception.VGBException;
 
@@ -133,4 +137,135 @@ class OrdersDAO {
 			throw new VGBException("建立訂單失敗", e);
 		}		
 	}
+
+	private static final String SELECT_Orders_History="SELECT id, order_date, order_time, status, "
+			+ "payment_type, shipping_type, payment_fee, shipping_fee, "
+			+ "	SUM(order_items.price * order_items.quantity) as total_amount "
+			+ " FROM orders "
+			+ "   JOIN order_items ON orders.id=order_items.order_id "
+			+ " WHERE orders.customer_id=? "
+			+ "   GROUP BY orders.id "
+			+ "   ORDER BY order_date DESC, order_time DESC";
+	List<Order> selectOrdersHistory(String customerId) throws VGBException{
+		List<Order> list = new ArrayList<>();
+		try(
+				Connection connection = MySQLConnection.getConnection();//1,2 取得連線
+				PreparedStatement pstmt = connection.prepareStatement(SELECT_Orders_History);//3. 準備指令
+			){
+			//3.1 傳入？的值
+			pstmt.setString(1, customerId);
+			
+			try(ResultSet rs = pstmt.executeQuery()//4.執行查詢指令
+					){
+				//5.處理rs
+				while(rs.next()) {
+					Order order = new Order();
+					order.setId(rs.getInt("id"));
+					order.setOrderDate(rs.getString("order_date"));
+					order.setOrderTime(rs.getString("order_time"));
+					order.setStatus(rs.getInt("status"));
+					
+					order.setPaymentType(rs.getString("payment_type"));
+					order.setPaymentFee(rs.getDouble("payment_fee"));
+					
+					order.setShippingType(rs.getString("shipping_type"));
+					order.setShippingFee(rs.getDouble("shipping_fee"));
+					
+					order.setTotalAmount(rs.getDouble("total_amount"));
+					
+					list.add(order);
+				}			
+			}			
+		}catch(SQLException e) {
+			throw new VGBException("查詢歷史訂單失敗",e);
+		}		
+		
+		return list;		
+	}
+
+	private static final String select_Order_ById="SELECT orders.id, customer_id, order_date, order_time, status,  "
+			+ "		payment_type, payment_fee, payment_note, shipping_type, shipping_fee, shipping_note,  "
+			+ "		shipping_address, recipient_name, recipient_email, recipient_phone, "
+			+ "	order_items.product_id, order_items.color_name, order_items.size_name,  "
+			+ "		order_items.price, order_items.quantity, "
+			+ "		products.name AS product_name,  "
+			+ "		IFNULL(product_colors.photo_url,products.photo_url) as photo_url "
+			+ " FROM orders "
+			+ "   LEFT JOIN order_items ON orders.id=order_items.order_id "
+			+ "   LEFT JOIN products ON order_items.product_id = products.id "
+			+ "   LEFT JOIN product_colors ON order_items.product_id = products.id "
+			+ "	AND order_items.color_name = product_colors.color_name "
+			+ "   WHERE orders.customer_id=? AND orders.id=?";
+	Order selectOrderById(String customerId, String orderId) throws VGBException{
+		Order order = null;
+		try(
+				Connection connection = MySQLConnection.getConnection();//1,2 取得連線
+				PreparedStatement pstmt = connection.prepareStatement(select_Order_ById);//3. 準備指令
+			){
+			//3.1 傳入？的值
+			pstmt.setString(1, customerId);
+			pstmt.setString(2, orderId);
+			
+			System.out.println(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()//4.執行查詢指令
+					){
+				//5.處理rs
+				while(rs.next()) {
+					if(order==null) {
+						order = new Order();
+						order.setId(rs.getInt("id"));
+						order.setOrderDate(rs.getString("order_date"));
+						order.setOrderTime(rs.getString("order_time"));
+						order.setStatus(rs.getInt("status"));
+						
+						order.setPaymentType(rs.getString("payment_type"));
+						order.setPaymentFee(rs.getDouble("payment_fee"));
+						order.setPaymentNote(rs.getString("payment_note"));
+						
+						order.setShippingType(rs.getString("shipping_type"));
+						order.setShippingFee(rs.getDouble("shipping_fee"));
+						order.setShippingNote(rs.getString("shipping_note"));
+						order.setShippingAddress(rs.getString("shipping_address"));
+						
+						order.setRecipientName(rs.getString("recipient_name"));
+						order.setRecipientEmail(rs.getString("recipient_email"));
+						order.setRecipientPhone(rs.getString("recipient_phone"));
+					}
+					
+					Integer pId = (Integer)rs.getObject("product_id");
+					if(pId!=null) {
+						OrderItem orderItem = new OrderItem();
+						orderItem.setOrderId(order.getId());
+						
+						Product p = new Product();
+						p.setId(rs.getInt("product_id"));
+						p.setName(rs.getString("product_name"));
+						p.setPhotoUrl(rs.getString("photo_url"));					
+						orderItem.setProduct(p);
+						
+						String colorName = rs.getString("color_name");
+						if(colorName!=null && colorName.length()>0) {
+							Color color = new Color();
+							color.setName(colorName);
+							color.setPhotoUrl(p.getPhotoUrl());
+							orderItem.setColor(color);
+						}
+						
+						orderItem.setSize(rs.getString("size_name"));
+						orderItem.setPrice(rs.getDouble("price"));
+						orderItem.setQuantity(rs.getInt("quantity"));
+						
+						order.addOrderItem(orderItem);
+					}
+				}			
+			}
+		}catch(SQLException e) {
+			throw new VGBException("查詢客戶訂單失敗", e);
+		}
+		
+		return order;
+	}
 }
+
+
+

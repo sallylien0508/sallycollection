@@ -1,3 +1,4 @@
+<%@page import="uuu.ksc.entity.Order"%>
 <%@page import="uuu.ksc.entity.ShippingType"%>
 <%@page import="uuu.ksc.entity.PaymentType"%>
 <%@page import="uuu.ksc.entity.Customer"%>
@@ -125,6 +126,7 @@
 				var selectedPaymentOption = $("select[name='paymentType'] option:selected");
 				var selectedShippingOption = $("select[name='shippingType'] option:selected");
 				var total = Number($("#totalAmount").text()); 
+
 				if(selectedPaymentOption.val().length>0){
 					if(selectedPaymentOption.attr("data-fee"))
 						total+=Number(selectedPaymentOption.attr("data-fee"));
@@ -134,9 +136,16 @@
 					if(selectedShippingOption.attr("data-fee"))
 						total+=Number(selectedShippingOption.attr("data-fee"));
 				}
-				
+
 				//alert(total);
 				$("#totalAmountWithFee").text(total);
+				if(selectedPaymentOption.val().length>0 && selectedShippingOption.val()==null){
+					$("#totalFee").text(String(selectedPaymentOption));
+				}else if(selectedShippingOption.val().length>0 && selectedPaymentOption.val()==null){
+					$("#totalFee").text(Number(selectedShippingOption));
+				}else{
+					$("#totalFee").text(Number(selectedPaymentOption.attr("data-fee")) + Number(selectedShippingOption.attr("data-fee")));
+				}
 			}
 			
 			function changeShippingAddr(){
@@ -187,7 +196,6 @@
         <article>
         <% 
         shoppingCart cart = (shoppingCart)session.getAttribute("cart");
-        
         Customer member = (Customer)session.getAttribute("member");
         if(cart!=null && member!=null){
         	cart.setMember(member);
@@ -260,20 +268,20 @@ ${requestScope.errorList}
 			        <br>
 			        <%= cartItem.getColorName() %><%= cartItem.getSizeName() %>
 			    </span>	
-					<span>$ <%= cart.getAmount(cartItem) %></span>
+					<span >$ <%= cart.getAmount(cartItem) %></span>
 				</div>
 				
 		<% }%>	
 		<hr>
 		<div style="text-align:right;">
 		共<%=cart.size() %>項, <%=cart.getTotalQuantity() %>件
-		總計: <%=cart.getTotalAmount() %>元
+		 總計: <span id='totalAmount' ><%=cart.getTotalAmount() %></span>元
 		<br>
-		+手續費 100元
+		+手續費 <span id='totalFee'>0</span>
 		</div>
 		<br>
 		<hr>
-		 <span>總計:</span> <div id='totalAmountWithFee' style="font-weight: 1000; text-align: right;font-size: 30px;"> NT:585.0</div>
+		 <span>總計:</span> <div id='totalAmountWithFee' style="font-weight: 1000; text-align: right;font-size: 30px;"><%=cart.getTotalAmount() %></div>
 		</div>
 </div>								
 			</form>

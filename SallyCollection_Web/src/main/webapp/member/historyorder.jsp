@@ -1,3 +1,6 @@
+<%@page import="uuu.ksc.service.OrderService"%>
+<%@page import="uuu.ksc.entity.Order"%>
+<%@page import="java.util.List"%>
 <%@page import="uuu.ksc.entity.Customer"%>
 <%@page import="uuu.ksc.entity.CartItem"%>
 <%@page import="uuu.ksc.entity.shoppingCart"%>
@@ -66,7 +69,16 @@
 	    <jsp:include page="/subviews/nav.jsp" />
 	</header>	  
         <article>
+        <%
+        	Customer member = (Customer)session.getAttribute("member");
+			List<Order> list = null;
+			if(member!=null){
+				OrderService oService = new OrderService();
+				list = oService.getOrdersHistory(member);
+			}
+		%>
 			<table id='cart'>
+		<% if(list==null || list.isEmpty()){%>查無歷史訂單<%}else{ %>	
 				<caption>歷史清單</caption>
 				<thead>
 					<tr>
@@ -77,16 +89,19 @@
 					<th>訂單金額</th>
 					</tr>
 				</thead>
+				<% for(Order order:list) {%>
 				<tbody>	
 					<tr>
-						<td><a href="<%= request.getContextPath() %>/member/check_out_ok.jsp" style="color:blue">Ap123456789</a></td>
-						<td>2023-03-01</td>
-						<td>線上刷卡</td>
-						<td>已出貨</td>
-						<td>1790元</td>
+			 	<td><a href='order.jsp?orderId=<%= order.getId() %>'><%= order.getIdString() %></a></td>
+						<td><%= order.getOrderDate() %> <%= order.getOrderTime() %></td>
+						<td><%= order.getPaymentType() %>/<%= order.getShippingType() %></td>
+						<td>未付款</td>
+				 		<td><%= order.getTotalAmountWithFee() %></td> 
 					</tr>										
 				</tbody>
+				<% } %>
 			</table>
+				<% } %>
 		</article>
        <%@ include file="/subviews/footer.jsp" %>
    
