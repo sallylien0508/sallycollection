@@ -208,6 +208,30 @@ public class Order {
 	public void setRecipientPhone(String recipientPhone) {
 		this.recipientPhone = recipientPhone;
 	}
+	
+	public String getShippingTypeDescription() {
+		if (shippingType!=null && shippingType.length()>0) {
+			try {
+				return ShippingType.valueOf(shippingType).getDescription();
+			}catch(Exception e) {
+				return shippingType;
+			}
+		}else {
+			return "";
+		}		 
+	}
+	
+	public String getPaymentTypeDescription() {
+		if (paymentType!=null && paymentType.length()>0) {
+			try {
+				return PaymentType.valueOf(paymentType).getDescription();
+			}catch(Exception e) {
+				return paymentType;
+			}
+		}else {
+			return "";
+		}		 
+	}
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", customer=" + customer + ", orderDate=" + orderDate + ", orderTime=" + orderTime

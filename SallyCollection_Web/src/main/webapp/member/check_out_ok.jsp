@@ -70,13 +70,24 @@ td{width: 20%;}
    <jsp:include page="/subviews/nav.jsp" />
 <div style="background-color:white;width: 80%; margin: 150px auto;">
 <%-- 	<div>${requestScope.theOrder}</div>		 --%>
-
+<%
+    		Customer member = (Customer)session.getAttribute("member");		
+			Order order = (Order)request.getAttribute("theOrder");
+			String orderId;
+			if(order!=null){
+				orderId = String.valueOf(order.getId());
+			}else{
+				orderId = request.getParameter("orderId");
+			}
+		%>
+		<% if(order==null) {%>
+		<%}else{ %>	
 	 <div class="shipping-progress">
 	  		<div class="step active">
 	    	<div class="circle">1</div>
 	    	<div class="label">下單</div>
 			</div>
-		  <div class="step active">
+		  <div class="step">
 		    <div class="circle">2</div>
 		    <div class="label">出貨</div>
 		  </div>
@@ -102,38 +113,36 @@ td{width: 20%;}
     		<p>出貨狀態</p>
     		
     	</div>
-    	<%
-			Order order = (Order)request.getAttribute("theOrder");
-			String orderId;
-			if(order!=null){
-				orderId = String.valueOf(order.getId());
-			}else{
-				orderId = request.getParameter("orderId");
-			}
-		%>
     	<div>
-    		<p>2023-02-03</p>
-	    	<p>AP12345678</p>
-	    	<p>新竹物流</p>
-	    	<p>線上刷卡</p>
-	    	<p>已出貨</p>
+    		<p><%= order.getOrderDate() %> <%= order.getOrderTime() %></p>
+	    	<p><%= order.getIdString() %></p>
+	    	<p><%= order.getShippingType() %></p>
+	    	<p><%= order.getPaymentType() %></p>
+	    	<p><%= (order.getStatus() == 0) ? "待出貨" : "出貨中" %></p>
     	</div>
 		<div>
-		    <p>原價</p>
-	    	<p>活動折扣</p>
-	    	<p>手續費</p>
+			<p>產品價格</p>
+	    	<p>付款手續費</p>
 	    	<p>運費</p>
-	    	<p>應繳總金額</p>
+	    	<p>總計</p>
 		</div>
 	    <div>
-		    <p>1780元</p>
-	    	<p>9折 178元</p>
-	    	<p>10元</p>
-	    	<p>20</p>
-	    	<p></p>
+	       	<p><span id='totalAmount'><%= order.getTotalAmount() %></span>元</p>
+	    	<p><%= order.getPaymentFee() %> 元</p>
+	    	<p><%= order.getShippingFee() %>元</p>
+	    	<p><%= order.getTotalAmountWithFee() %></p>
+	 
 		</div>
     </div>
     <hr>
+     <p style="text-align: center;font-size: 30px;color: #0b0b53;">
+    收件人資料
+    </p>
+	<label>姓名: </label><p><%= order.getRecipientName() %></p><br>
+	<label>Email:</label><p><%= order.getRecipientEmail() %></p><br>
+	<label>電話: </label><p><%= order.getRecipientPhone() %></p><br>		
+	<label>地址: </label><p><%= order.getShippingAddress() %></p>
+	<hr>
     <p style="text-align: center;font-size: 30px;color: #0b0b53;">
     訂單明細
     </p>
@@ -141,25 +150,32 @@ td{width: 20%;}
 <thead>
     <tr>
 	    <th>產品</th>
-	    <th>價格</th>
+	    <th>顏色</th>
+	    <th>尺寸</th>
+	    <th>價格/1件</th>
 	    <th>數量</th>
 	    <th>小計</th>
     </tr>
 <thead>
 <tbody>
+<% for(OrderItem orderItem:order.getOrderItemSet()) {%>
 	<tr> 
 		<td>
-		 	 <span>Snoopy Dress</span><br>
-	   		 <img alt="" src="<%= request.getContextPath() %>/images/snoopy_black.jpg" style="width:50%">
+		 	 <span><%= orderItem.getProductName() %>	</span><br>
+	   		 <img alt="" src='<%= request.getContextPath() %>/<%= orderItem.getPhotoURL()%>' style="width:50%">
 	    </td>
-	    <td>499</td>
-	    <td>2件</td>
-	    <td>989元</td>
+	    	<td><%= orderItem.getColorName()%></td>
+	    	<td><%= orderItem.getSize()%></td>
+			<td><%= orderItem.getPrice()%>元</td>
+			<td><%= orderItem.getQuantity()%></td>
+			<td><%= orderItem.getAmount()%>元</td>
 	</tr>
+	<% } %>		
 </tbody>
 </table>
 
 </div>
+	<% } %>	
 <%@ include file="/subviews/footer.jsp" %>
 </body>
 </html> 

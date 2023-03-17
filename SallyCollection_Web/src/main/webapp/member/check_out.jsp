@@ -143,8 +143,10 @@
 					$("#totalFee").text(String(selectedPaymentOption));
 				}else if(selectedShippingOption.val().length>0 && selectedPaymentOption.val()==null){
 					$("#totalFee").text(Number(selectedShippingOption));
-				}else{
+				}else if(selectedShippingOption.val().length>0 && selectedPaymentOption.val().length>0){
 					$("#totalFee").text(Number(selectedPaymentOption.attr("data-fee")) + Number(selectedShippingOption.attr("data-fee")));
+				}else{
+					$("#totalFee").text(0);
 				}
 			}
 			
@@ -207,9 +209,9 @@
 <%}else{  %>
 ${requestScope.errorList}
 <div style="margin: 150px 0px 50px 90px;">
-<a href="<%= request.getContextPath() %>/member/cart.jsp" style="color:black">cart</a> > <a href="<%= request.getContextPath() %>/member/check_out.jsp" style="color:black">Information</a> > <span style="color:grey">payment</span><br>
+<a href="<%= request.getContextPath() %>/member/cart.jsp" style="color:black">cart</a> > <a href="<%= request.getContextPath() %>/member/check_out.jsp" style="color:black">Information</a> > <span style="color:grey">payment</span> > <span style="color:grey">history</span><br>
 </div>
-<form action='check_out.do' method ='POST'><!-- http://localhost:8080/ksc/member/check_out.do -->
+<form id='cartForm' action='check_out.do' method ='POST'><!-- http://localhost:8080/ksc/member/check_out.do -->
 <div style="display:flex;justify-content: space-around;">	
 		<div style="width: 50%;">
 			<div>

@@ -72,6 +72,16 @@ public class OrderItem {
 	public double getAmount() {	
 		return price* quantity;
 	}
+	
+	public String getDisplayedColorSizeName() {
+		String displayedName=getColorName();
+		if(size!=null && size.length()>0) {
+			if(displayedName.length()>0) displayedName+="/";
+			displayedName+=size;
+		}
+		
+		return displayedName;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

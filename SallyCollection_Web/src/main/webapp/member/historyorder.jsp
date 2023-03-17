@@ -84,7 +84,7 @@
 					<tr>
 					<th>訂單編號</th>
 					<th>訂購日期</th>
-					<th>付款方式</th>
+					<th>付款 / 收貨方式</th>
 					<th>訂單狀態</th>
 					<th>訂單金額</th>
 					</tr>
@@ -92,10 +92,10 @@
 				<% for(Order order:list) {%>
 				<tbody>	
 					<tr>
-			 	<td><a href='order.jsp?orderId=<%= order.getId() %>'><%= order.getIdString() %></a></td>
+			 	<td><a href='order.jsp?orderId=<%= order.getId() %>' style="color:darkblue"><%= order.getIdString() %></a></td>
 						<td><%= order.getOrderDate() %> <%= order.getOrderTime() %></td>
 						<td><%= order.getPaymentType() %>/<%= order.getShippingType() %></td>
-						<td>未付款</td>
+						<td><%= (order.getStatus() == 0) ? "待出貨" : "出貨中" %></td>
 				 		<td><%= order.getTotalAmountWithFee() %></td> 
 					</tr>										
 				</tbody>
