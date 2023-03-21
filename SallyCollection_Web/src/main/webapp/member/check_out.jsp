@@ -109,10 +109,6 @@
 				calculateAmountWithFee();
 			}
 			
-			function paymentChanged(){
-				calculateAmountWithFee();				
-			}
-			
 			function shippingChanged(){
 				calculateAmountWithFee();
 				changeShippingAddr();
@@ -184,6 +180,27 @@
 					$("input[name='shippingAddr']").val("${sessionScope.member.address}");
 				}
 			}
+			$(init); 
+			
+			function init(){		
+				<% if("POST".equals(request.getMethod())){%>
+				repopulateForm();
+				<%}%>
+				//$("select[name='shippingType']").on("change", changePaymentOption);		
+				//$("select[name='paymentType']").on("change", calculateAmount);	
+			}
+			
+			function repopulateForm(){
+				$("select[name='paymentType']").val('<%= request.getParameter("paymentType")%>');
+				$( "select[name='paymentType']" ).trigger( "change" );
+				$("select[name='shippingType']").val('<%= request.getParameter("shippingType")%>');
+				$( "select[name='shippingType']" ).trigger( "change" );
+				
+				$("input[name='name']").val('<%= request.getParameter("name")%>');
+				$("input[name='email']").val('${param.email}');
+				$("input[name='phone']").val('${param.phone}');
+				$("input[name='shippingAddr']").val('${param.shippingAddr}');		
+			}
 		</script>
 	</head>
 	  <body>    
@@ -211,7 +228,7 @@ ${requestScope.errorList}
 <div style="margin: 150px 0px 50px 90px;">
 <a href="<%= request.getContextPath() %>/member/cart.jsp" style="color:black">cart</a> > <a href="<%= request.getContextPath() %>/member/check_out.jsp" style="color:black">Information</a> > <span style="color:grey">payment</span> > <span style="color:grey">history</span><br>
 </div>
-<form id='cartForm' action='check_out.do' method ='POST'><!-- http://localhost:8080/ksc/member/check_out.do -->
+<form id='cartForm' action='check_out.do' method='POST'><!-- http://localhost:8080/ksc/member/check_out.do -->
 <div style="display:flex;justify-content: space-around;">	
 		<div style="width: 50%;">
 			<div>
@@ -290,6 +307,46 @@ ${requestScope.errorList}
 				<% } %>
 		</article>
 </div> 
+<script>
+			$("#chooseStoreButton").click(goEZShip);
+			function goEZShip() {//前往EZShip選擇門市
+            	if (confirm("Go EZ前，你的網址已經改用ip Address了嗎?")) {
+                	alert("出發");
+             	} else {
+                  alert("快改網址!");
+                  return;
+             	}
+
+				$("input[name='name']").val($("input[name='name']").val().trim());				
+				$("input[name='email']").val($("input[name='email']").val().trim());				
+				$("input[name='phone']").val($("input[name='phone']").val().trim());				
+				$("input[name='shippingAddr']").val($("input[name='shippingAddr']").val().trim());
+				 
+				var protocol = "<%= request.getProtocol().toLowerCase().substring(0, request.getProtocol().indexOf("/")) %>";				
+				var ipAddress = "<%= java.net.InetAddress.getLocalHost().getHostAddress()%>";				
+				var url = protocol + "://" + ipAddress + ":" + location.port + "<%=request.getContextPath()%>/member/ezship_callback.jsp";
+				$("#rtURL").val(url);				
+				 
+				
+				//$("#webPara").val($("form[action='check_out.do']").serialize());				
+				$("#webPara").val($("#cartForm").serialize());				 
+				
+				alert('現在網址不得為locolhost: '+url); //測試用，測試完畢後請將此行comment				
+				alert($("#webPara").val()) //測試用，測試完畢後請將此行comment
+				
+				$("#ezForm").submit();				
+			}
+
+			</script>
+
+	<form id="ezForm" method="post" name="simulation_from" action="https://map.ezship.com.tw/ezship_map_web.jsp" >
+	<input type="hidden" name="suID"  value="test@vgb.com"> <!-- 業主在 ezShip 使用的帳號, 隨便寫 -->
+	<input type="hidden" name="processID" value="VGB202107050000005"> <!-- 購物網站自行產生之訂單編號, 隨便寫 -->
+	<input type="hidden" name="stCate"  value=""> <!-- 取件門市通路代號 -->
+	<input type="hidden" name="stCode"  value=""> <!-- 取件門市代號 -->
+	<input type="hidden" name="rtURL" id="rtURL" value=""> <!-- 回傳路徑及程式名稱 -->
+	<input type="hidden" id="webPara" name="webPara" value=""> <!-- 結帳網頁中cartForm中的輸入欄位資料。ezShip將原值回傳，才能帶回結帳網頁 -->
+	</form>  
 <%-- <div style="
     position: absolute;
     width: 100%;

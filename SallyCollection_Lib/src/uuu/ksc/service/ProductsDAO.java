@@ -602,6 +602,37 @@ class ProductsDAO{
 				 			 
 				 			 return list;
 				 }
+				 	 private static final String selectPimg="SELECT product_id,detail_img from products_detail_img where product_id=? ";
+					 	List<Product> selectPimg(String id) throws VGBException{
+					 			 List<Product> list =new ArrayList<>();
+					 			 Product p=null;
+					 			 try ( Connection connection = MySQLConnection.getConnection();//1,2取得連線
+					 					   PreparedStatement pstmt = connection.prepareStatement(selectPimg);//3. 準備指令
+					 					 ){
+					 				 //3.1傳入?(1個)的值
+					 				 pstmt.setString(1, id);
+					 				 try(			
+					 				 ResultSet rs = pstmt.executeQuery();//4.執行指令
+					 				 ){
+					 					 //5. 處理rs
+					 					 while(rs.next()) {
+					 						 
+					 						 
+					 						 p = new Product();
+					 						 p.setId(rs.getInt("product_id"));
+					 						 p.setPimg(rs.getString("detail_img"));
+					 						 list.add(p);
+					 						 
+					 					 }
+					 				 }
+
+					 			} catch (SQLException e) {
+					 				throw new VGBException("查詢全部產品失敗",e);
+					 			}
+					 			 
+					 			 return list;
+					 }
+					 	
 	}
 
 

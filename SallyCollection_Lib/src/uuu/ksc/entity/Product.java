@@ -22,6 +22,7 @@ public class Product extends Object{
 	private Map<String, Color> colorsMap=new HashMap<>();
 	private boolean hasSize;
 	private String gendercategory;
+	private String Pimg;
 	
 	public boolean hasSize() {
 		return hasSize;
@@ -181,6 +182,7 @@ public class Product extends Object{
 				+ ", 分類=" + category 
 				+",\n colorsMap=" + this.getColorsList()
 				+",\n有size:"+ hasSize()
+				+",\n小圖 :"+ getPimg()
 				+ "]";
 	}
 
@@ -212,6 +214,14 @@ public class Product extends Object{
 
 	public void setGendercategory(String gendercategory) {
 		this.gendercategory = gendercategory;
+	}
+
+	public String getPimg() {
+		return Pimg;
+	}
+
+	public void setPimg(String pimg) {
+		Pimg = pimg;
 	}
 	
 	

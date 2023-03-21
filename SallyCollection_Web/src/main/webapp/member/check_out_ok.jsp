@@ -138,10 +138,16 @@ td{width: 20%;}
      <p style="text-align: center;font-size: 30px;color: #0b0b53;">
     收件人資料
     </p>
-	<label>姓名: </label><p><%= order.getRecipientName() %></p><br>
-	<label>Email:</label><p><%= order.getRecipientEmail() %></p><br>
-	<label>電話: </label><p><%= order.getRecipientPhone() %></p><br>		
-	<label>地址: </label><p><%= order.getShippingAddress() %></p>
+	    <div style="display:flex;justify-content: space-evenly;">
+	    <div>
+			<p>姓名: <%= order.getRecipientName() %></p>
+			<p>Email: <%= order.getRecipientEmail() %></p>
+		</div>
+		<div>
+			<p>電話: <%= order.getRecipientPhone() %></p>	
+			<p>地址: <%= order.getShippingAddress() %></p> 
+		</div>
+	</div>
 	<hr>
     <p style="text-align: center;font-size: 30px;color: #0b0b53;">
     訂單明細

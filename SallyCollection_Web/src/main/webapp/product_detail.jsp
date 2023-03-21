@@ -154,6 +154,8 @@
 		</style>
 		<%
 		String productId=request.getParameter("productId");
+		String Pimg = request.getParameter("detail_img");
+		List<Product> list;
 		ProductService service = new ProductService();
 		Product p =null;
 		if(productId!=null && productId.length()>0){
@@ -307,6 +309,22 @@ $(document).ready(function(){
 				<div id="overlay">
 				    <img id="overlayImg" src="">
 				</div>
+<% 
+	
+    list = service.getPimg(productId);
+if (list != null && list.size()>0) {
+%>
+
+<div id="slide-wrapper">
+    <img id="slideLeft" class="arrow" src="images/arrow-left.png"> 	
+    <div id="slider">
+        <% for (Product product : list) { %>
+            <img src='<%= product.getPimg() %>' class="smallPic"/>
+        <% } %>
+    </div>
+    <img id="slideRight" class="arrow" src="images/arrow-right.png">
+</div>
+<% }else{ %>
 				<div id="slide-wrapper">
 				 	<img id="slideLeft" class="arrow" src="images/arrow-left.png">
 				    <div id="slider">
@@ -320,6 +338,7 @@ $(document).ready(function(){
 				    </div>
 				  	<img id="slideRight" class="arrow" src="images/arrow-right.png">
 			</div>
+			<%} %>
 				 </div>  
 				<div class='productInfo'>
 					<span style="font-size: 35px;"><%= p.getName() %></span>

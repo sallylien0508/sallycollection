@@ -95,6 +95,25 @@
 		#myBtn:hover {
 		  color: white;
 		}
+.productItem.disabled {
+    opacity: 0.5;
+    position: relative; /* 父元素需加入 position: relative，以便讓偽元素的定位參照父元素 */
+}
+
+.productItem.disabled::before {
+    content: "缺貨中";
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ccc;
+    color: #fff;
+    padding: 30px;
+    font-size: 30px;
+
+}
+
+
           </style>
 	</head>
 
@@ -175,41 +194,52 @@
                 <input type='search' name='keyword' placeholder='請輸入查詢關鍵字...' size="50">
                 <button type="submit"><i class="fa fa-search"></i></button>         
          </form>
-   
-        <% if(list==null||list.size()==0){ %>
-       		 <p>查無產品</p>
-        <% }else{ %>
-          
-            <% for(int i =0;i<list.size();i++){
-            	Product p =list.get(i);
-            	%>
-            <div class="productItem">
-                <h1>
-                  現<br>貨<br>供<br>應
-                </h1> 
-                <img class="productimgfav" src="https://hexschool.github.io/webLayoutTraining1st/student-week1/favorite_border.png" alt=""> 
-               <%--  <a href='product_detail.jsp?productId=<%= p.getId()%>'> --%>
-               <a href='javascript:getProductData(<%= p.getId()%>)'>
-                <img class="productimg" src="<%= p.getPhotoUrl() %>" alt="">
-               </a>
-               
-               <a href='product_detail.jsp?productId=<%= p.getId()%>'> 
-                <ul class="prodcontan">
-                  <li class="name"> <%= p.getName() %>(<%= p.getStock() %>)</li>
-                  <li class="price">NT$ <% if(p instanceof Outlet){ %>
-  					 <%= ((Outlet)p).getDiscountString()%>
-                     <% } %>
-                  <%= p.getUnitPrice() %></li>
-                </ul>
+   <% if (list == null || list.size() == 0) { %>
+    <p>查無產品</p>
+<% } else { %>
+    <% for (int i = 0; i < list.size(); i++) {
+        Product p = list.get(i);
+        %>
+        <div class="productItem<%= (p.getStock() <= 0) ? " disabled" : "" %>">
+            <% if (p.getStock() <= 0) { %>
+                <div class="disabledOverlay"></div>
+            <% } %>
+
+            <% if (p.getStock() > 0) { %>
+            <h1>
+                現<br>貨<br>供<br>應
+            </h1>
+            <img class="productimgfav" src="https://hexschool.github.io/webLayoutTraining1st/student-week1/favorite_border.png" alt="">
+                <a href='javascript:getProductData(<%= p.getId()%>)'>
+            <% } %>
+            <img class="productimg" src="<%= p.getPhotoUrl() %>" alt="">
+            <% if (p.getStock() > 0) { %>
                 </a>
-                <%-- <a href="<%= request.getContextPath() %>/member/cart.jsp"> --%>
-	                <p>
-	                  <a href="<%= request.getContextPath() %>/product_detail.jsp?productId=<%= p.getId()%>"><input type="submit" value="View More"></input></a>
-	                </p>
-                <!-- </a> -->
-              </div>
-       <%} %>
-        <%} %>
+            <% } %>
+            <a href='product_detail.jsp?productId=<%= p.getId()%>'>
+                <ul class="prodcontan">
+                    <li class="name">
+                        <%= p.getName() %>
+                        (<%= p.getStock() %>)
+                    </li>
+                    <li class="price">
+                        NT$
+                        <% if(p instanceof Outlet){ %>
+                            <%= ((Outlet)p).getDiscountString()%>
+                        <% } %>
+                        <%= p.getUnitPrice() %>
+                    </li>
+                </ul>
+            </a>
+            <p>
+                <a href="<%= (p.getStock() > 0) ? (request.getContextPath() + "/product_detail.jsp?productId=" + p.getId()) : "javascript:void(0)" %>">
+                    <input type="submit" value="View More"<%= (p.getStock() <= 0) ? " disabled" : "" %>></input>
+                </a>
+            </p>
+        </div>
+    <% } %>
+<% } %>
+
         <i class="fa-solid fa-circle-up" onclick="topFunction()" id="myBtn" title="Go to top" style="font-size: 50px;"></i>
         <div id='fancyDialog'></div>
         <%@ include file="/subviews/footer.jsp" %>

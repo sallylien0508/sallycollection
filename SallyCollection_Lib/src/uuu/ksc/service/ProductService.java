@@ -58,4 +58,8 @@ public class ProductService {
 	public List<Product> getALLLowToHigh() throws VGBException{
 		return dao.selectALLLowToHigh();
 	}
+	public List<Product> getPimg(String id) throws VGBException{
+	    return dao.selectPimg(id);
+	}
+
 }
